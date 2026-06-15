@@ -9,78 +9,87 @@
 <meta name="theme-color" content="#f0f0f0">
 <title>Sentinel Field</title>
 <style>
-:root {
-  --bg: #eaeaea;
-  --surface: #ffffff;
-  --surface2: #f2f2f2;
-  --border: rgba(0,0,0,0.08);
-  --border2: rgba(0,0,0,0.15);
-  --text: #111111;
-  --text2: #666666;
-  --text3: #aaaaaa;
-  --accent: #1a6fa8;
-  --accent-dim: rgba(26,111,168,0.10);
-  --red: #c0392b;
-  --red-dim: rgba(192,57,43,0.10);
-  --green: #27ae60;
-  --green-dim: rgba(39,174,96,0.10);
-  --blue: #1a6fa8;
-  --blue-dim: rgba(26,111,168,0.10);
-  --amber: #e67e22;
-  --amber-dim: rgba(230,126,34,0.10);
-  --radius: 10px;
-  --radius-sm: 6px;
-  --safe-bottom: env(safe-area-inset-bottom, 0px);
+:root{
+  --bg:#eaeaea;--surface:#fff;--surface2:#f2f2f2;
+  --border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.15);
+  --text:#111;--text2:#666;--text3:#aaa;
+  --accent:#1a6fa8;--accent-dim:rgba(26,111,168,0.10);
+  --red:#c0392b;--red-dim:rgba(192,57,43,0.10);
+  --green:#27ae60;--green-dim:rgba(39,174,96,0.10);
+  --amber:#e67e22;--amber-dim:rgba(230,126,34,0.10);
+  --radius:10px;--radius-sm:6px;
+  --safe-bottom:env(safe-area-inset-bottom,0px);
+  --safe-top:env(safe-area-inset-top,0px);
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;font-size:15px}
 body{display:flex;flex-direction:column}
 
+/* LOCK SCREEN */
+#lock-screen{position:fixed;inset:0;background:var(--surface);z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px;gap:20px}
+#lock-screen.hidden{display:none}
+.lock-logo{font-size:48px;margin-bottom:8px}
+.lock-title{font-size:22px;font-weight:700;letter-spacing:-0.02em;color:var(--text)}
+.lock-sub{font-size:14px;color:var(--text2);text-align:center;line-height:1.5}
+.lock-pin{display:flex;gap:12px;margin:8px 0}
+.lock-dot{width:14px;height:14px;border-radius:50%;border:2px solid var(--border2);background:none;transition:background 0.15s}
+.lock-dot.filled{background:var(--accent);border-color:var(--accent)}
+.pin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:240px}
+.pin-btn{height:64px;background:var(--surface2);border:0.5px solid var(--border);border-radius:var(--radius);font-size:22px;font-weight:400;color:var(--text);cursor:pointer;font-family:inherit;transition:background 0.1s}
+.pin-btn:active{background:var(--border2)}
+.pin-btn.del{font-size:16px;color:var(--text2)}
+.lock-faceid{width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius);font-size:16px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:4px}
+.lock-error{font-size:13px;color:var(--red);min-height:18px;text-align:center}
+.setup-hint{font-size:12px;color:var(--text3);text-align:center;margin-top:4px}
+
+/* NAV */
 .nav{display:flex;background:var(--surface);border-top:0.5px solid var(--border);flex-shrink:0;padding-bottom:var(--safe-bottom);order:2}
-.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 4px;border:none;background:none;color:var(--text3);font-size:10px;font-family:inherit;cursor:pointer;transition:color 0.15s;letter-spacing:0.02em}
+.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 4px;border:none;background:none;color:var(--text3);font-size:10px;font-family:inherit;cursor:pointer;transition:color 0.15s}
 .nav-btn svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 .nav-btn.active{color:var(--accent)}
 
+/* MAIN */
 .main{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;order:1}
 .screen{display:none;padding:16px;padding-bottom:24px}
 .screen.active{display:block}
-
 .screen-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
 .screen-title{font-size:20px;font-weight:700;letter-spacing:-0.02em}
 .btn-new{display:flex;align-items:center;gap:5px;padding:7px 13px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
-.btn-new svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.5}
 
-.card{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;cursor:pointer;transition:box-shadow 0.15s}
-.card:active{box-shadow:0 0 0 2px var(--accent)}
+/* CARDS */
+.card{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;cursor:pointer}
+.card:active{border-color:var(--accent)}
 .card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px}
-.card-id{font-size:15px;font-weight:700;letter-spacing:-0.01em}
+.card-id{font-size:15px;font-weight:700}
 .card-meta{font-size:12px;color:var(--text2);margin-top:2px}
-.badge{display:inline-flex;align-items:center;padding:3px 8px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:0.02em}
-.badge-blue{background:var(--blue-dim);color:var(--blue)}
-.badge-red{background:var(--red-dim);color:var(--red)}
-.badge-green{background:var(--green-dim);color:var(--green)}
-.badge-amber{background:var(--amber-dim);color:var(--amber)}
-.badge-gray{background:var(--surface2);color:var(--text2)}
-
+.badge{display:inline-flex;align-items:center;padding:3px 8px;border-radius:4px;font-size:11px;font-weight:600}
+.b-blue{background:var(--accent-dim);color:var(--accent)}
+.b-red{background:var(--red-dim);color:var(--red)}
+.b-green{background:var(--green-dim);color:var(--green)}
+.b-amber{background:var(--amber-dim);color:var(--amber)}
+.b-gray{background:var(--surface2);color:var(--text2)}
 .taller-label{font-size:11px;font-weight:700;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin:16px 0 8px;padding-bottom:4px;border-bottom:0.5px solid var(--border)}
 .taller-label:first-child{margin-top:0}
 
-.form-label{display:block;font-size:11px;font-weight:600;color:var(--text2);margin-bottom:5px;margin-top:14px;letter-spacing:0.04em;text-transform:uppercase}
-.form-label:first-child{margin-top:0}
-.form-input{width:100%;background:var(--surface2);border:0.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;color:var(--text);font-size:15px;font-family:inherit;outline:none;-webkit-appearance:none;appearance:none}
-.form-input:focus{border-color:var(--accent)}
-select.form-input{cursor:pointer}
-textarea.form-input{resize:vertical;min-height:72px;line-height:1.5}
+/* FORM */
+.fl{display:block;font-size:11px;font-weight:600;color:var(--text2);margin-bottom:5px;margin-top:14px;letter-spacing:0.04em;text-transform:uppercase}
+.fl:first-child{margin-top:0}
+.fi{width:100%;background:var(--surface2);border:0.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;color:var(--text);font-size:15px;font-family:inherit;outline:none;-webkit-appearance:none}
+.fi:focus{border-color:var(--accent)}
+textarea.fi{resize:vertical;min-height:72px;line-height:1.5}
+select.fi{cursor:pointer}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.subsection{border-left:2px solid var(--accent-dim);padding:10px 0 4px 14px;margin:10px 0}
-.subsection-title{font-size:12px;font-weight:700;color:var(--accent);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:4px}
+.subsect{border-left:2px solid var(--accent-dim);padding:10px 0 4px 14px;margin:10px 0}
+.subsect-title{font-size:12px;font-weight:700;color:var(--accent);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:4px}
 
+/* CHIPS */
 .chip-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
 .chip{padding:6px 12px;border-radius:20px;border:0.5px solid var(--border2);font-size:13px;background:var(--surface);color:var(--text2);cursor:pointer;font-family:inherit;transition:all 0.15s}
 .chip.on{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600}
 
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:50;overflow-y:auto;-webkit-overflow-scrolling:touch}
-.modal-overlay.open{display:block}
+/* MODAL */
+.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:50;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.ov.open{display:block}
 .modal{background:var(--bg);border-radius:var(--radius) var(--radius) 0 0;padding:20px 16px;padding-bottom:calc(24px + var(--safe-bottom));margin-top:40px;min-height:calc(100vh - 40px)}
 .modal-handle{width:36px;height:4px;background:var(--border2);border-radius:2px;margin:0 auto 16px}
 .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
@@ -88,57 +97,101 @@ textarea.form-input{resize:vertical;min-height:72px;line-height:1.5}
 .modal-close{width:30px;height:30px;display:flex;align-items:center;justify-content:center;background:var(--surface2);border:none;border-radius:50%;color:var(--text2);cursor:pointer}
 .modal-close svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
 
-.btn-full{width:100%;padding:13px;border-radius:var(--radius);font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:10px;border:none;transition:opacity 0.15s}
-.btn-full:active{opacity:0.75}
-.btn-primary{background:var(--accent);color:#fff}
-.btn-ghost{background:var(--surface);color:var(--text);border:0.5px solid var(--border2)}
-.btn-danger{background:var(--red-dim);color:var(--red);border:0.5px solid rgba(192,57,43,0.2)}
+/* BUTTONS */
+.btn{width:100%;padding:13px;border-radius:var(--radius);font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:10px;border:none}
+.btn:active{opacity:0.8}
+.btn-p{background:var(--accent);color:#fff}
+.btn-g{background:var(--surface);color:var(--text);border:0.5px solid var(--border2)}
+.btn-d{background:var(--red-dim);color:var(--red);border:0.5px solid rgba(192,57,43,0.2)}
 
-.detail-row{display:flex;justify-content:space-between;align-items:baseline;padding:9px 0;border-bottom:0.5px solid var(--border)}
-.detail-row:last-child{border-bottom:none}
-.detail-key{font-size:13px;color:var(--text2);flex-shrink:0;margin-right:12px}
-.detail-val{font-size:13px;text-align:right;word-break:break-all}
-.section-sep{font-size:11px;font-weight:700;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin:16px 0 8px;padding-bottom:6px;border-bottom:0.5px solid var(--border)}
+/* DETAIL */
+.dr{display:flex;justify-content:space-between;align-items:baseline;padding:9px 0;border-bottom:0.5px solid var(--border)}
+.dr:last-child{border-bottom:none}
+.dk{font-size:13px;color:var(--text2);flex-shrink:0;margin-right:12px}
+.dv{font-size:13px;text-align:right;word-break:break-all}
+.sep{font-size:11px;font-weight:700;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin:16px 0 8px;padding-bottom:6px;border-bottom:0.5px solid var(--border)}
 
+/* STATS */
 .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
 .stat-card{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--radius);padding:14px}
 .stat-num{font-size:28px;font-weight:700;letter-spacing:-0.03em;line-height:1}
-.stat-lbl{font-size:11px;color:var(--text2);margin-top:4px;letter-spacing:0.03em}
+.stat-lbl{font-size:11px;color:var(--text2);margin-top:4px}
 
-.int-item{padding:10px 0;border-bottom:0.5px solid var(--border)}
-.int-item:last-child{border-bottom:none}
-.int-meta{font-size:11px;color:var(--text2);margin-bottom:3px}
-.int-desc{font-size:14px;line-height:1.4}
-.int-mat{font-size:12px;color:var(--text3);margin-top:3px}
+/* INTERVENCIONES */
+.ii{padding:10px 0;border-bottom:0.5px solid var(--border)}
+.ii:last-child{border-bottom:none}
+.ii-meta{font-size:11px;color:var(--text2);margin-bottom:3px}
+.ii-desc{font-size:14px;line-height:1.4}
+.ii-mat{font-size:12px;color:var(--text3);margin-top:3px}
 
+/* EMPTY */
 .empty{text-align:center;padding:48px 16px;color:var(--text3)}
 .empty svg{width:40px;height:40px;stroke:currentColor;fill:none;stroke-width:1;margin-bottom:12px;opacity:0.4}
 .empty p{font-size:14px;line-height:1.5}
 
+/* OFFLINE */
 .offline-bar{display:none;background:var(--red-dim);border-bottom:0.5px solid var(--red);padding:6px 16px;font-size:12px;color:var(--red);text-align:center;flex-shrink:0;order:0}
 .offline-bar.show{display:block}
 
-.sync-row{display:flex;align-items:center;gap:8px;padding:10px 0;font-size:13px;color:var(--text2)}
-.sync-dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0}
-.sync-dot.offline{background:var(--red)}
-
 /* FOTOS */
 .foto-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px}
-.foto-thumb{width:100%;aspect-ratio:1;object-fit:cover;border-radius:var(--radius-sm);border:0.5px solid var(--border);background:var(--surface2);cursor:pointer}
-.foto-add{width:100%;aspect-ratio:1;border-radius:var(--radius-sm);border:1px dashed var(--border2);background:var(--surface2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;color:var(--text3);font-size:11px}
-.foto-add svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.5}
-.foto-viewer{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:100;flex-direction:column;align-items:center;justify-content:center}
-.foto-viewer.open{display:flex}
-.foto-viewer img{max-width:100%;max-height:85vh;object-fit:contain;border-radius:4px}
-.foto-viewer-close{position:absolute;top:16px;right:16px;width:36px;height:36px;background:rgba(255,255,255,0.15);border:none;border-radius:50%;color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.foto-viewer-del{position:absolute;bottom:32px;background:var(--red);color:#fff;border:none;padding:10px 24px;border-radius:var(--radius);font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+.fthumb{width:100%;aspect-ratio:1;object-fit:cover;border-radius:var(--radius-sm);border:0.5px solid var(--border);cursor:pointer}
+.fadd{width:100%;aspect-ratio:1;border-radius:var(--radius-sm);border:1px dashed var(--border2);background:var(--surface2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;color:var(--text3);font-size:11px}
+.fadd svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.5}
+
+/* FOTO VIEWER */
+.fviewer{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.93);z-index:100;flex-direction:column;align-items:center;justify-content:center}
+.fviewer.open{display:flex}
+.fviewer img{max-width:100%;max-height:82vh;object-fit:contain;border-radius:4px}
+.fv-close{position:absolute;top:16px;right:16px;width:36px;height:36px;background:rgba(255,255,255,0.15);border:none;border-radius:50%;color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.fv-del{position:absolute;bottom:32px;background:var(--red);color:#fff;border:none;padding:10px 24px;border-radius:var(--radius);font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+
+/* SYNC */
+.sync-row{display:flex;align-items:center;gap:8px;padding:10px 0;font-size:13px;color:var(--text2)}
+.sync-dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
+.sync-dot.off{background:var(--red)}
+
+/* NOTA PRIVADA */
+.nota-priv{background:rgba(230,126,34,0.08);border:0.5px solid rgba(230,126,34,0.3);border-radius:var(--radius-sm);padding:8px 10px;margin-top:8px;font-size:13px;color:var(--amber)}
+.nota-priv-label{font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--amber);margin-bottom:3px}
 </style>
 </head>
 <body>
 
-<div class="offline-bar" id="offline-bar">Sin conexión — datos guardados localmente</div>
-<div class="main" id="main">
+<!-- PANTALLA DE BLOQUEO -->
+<div id="lock-screen">
+  <div class="lock-logo">🔧</div>
+  <div class="lock-title">Sentinel Field</div>
+  <div class="lock-sub" id="lock-sub">Introduce tu PIN para acceder</div>
+  <div class="lock-pin" id="lock-pin">
+    <div class="lock-dot" id="d0"></div>
+    <div class="lock-dot" id="d1"></div>
+    <div class="lock-dot" id="d2"></div>
+    <div class="lock-dot" id="d3"></div>
+  </div>
+  <div class="lock-error" id="lock-error"></div>
+  <div class="pin-grid" id="pin-grid">
+    <button class="pin-btn" onclick="pinKey('1')">1</button>
+    <button class="pin-btn" onclick="pinKey('2')">2</button>
+    <button class="pin-btn" onclick="pinKey('3')">3</button>
+    <button class="pin-btn" onclick="pinKey('4')">4</button>
+    <button class="pin-btn" onclick="pinKey('5')">5</button>
+    <button class="pin-btn" onclick="pinKey('6')">6</button>
+    <button class="pin-btn" onclick="pinKey('7')">7</button>
+    <button class="pin-btn" onclick="pinKey('8')">8</button>
+    <button class="pin-btn" onclick="pinKey('9')">9</button>
+    <button class="pin-btn" onclick="pinKey('')"></button>
+    <button class="pin-btn" onclick="pinKey('0')">0</button>
+    <button class="pin-btn del" onclick="pinDel()">⌫</button>
+  </div>
+  <button class="lock-faceid" id="btn-faceid" onclick="tryFaceID()" style="display:none">Face ID / Touch ID</button>
+  <div class="setup-hint" id="setup-hint"></div>
+</div>
 
+<div class="offline-bar" id="offline-bar">Sin conexión — datos guardados localmente</div>
+
+<div class="main" id="main">
+  <!-- MÁQUINAS -->
   <div class="screen active" id="screen-maquinas">
     <div class="screen-header">
       <span class="screen-title">Máquinas</span>
@@ -147,9 +200,23 @@ textarea.form-input{resize:vertical;min-height:72px;line-height:1.5}
         Nueva
       </button>
     </div>
+    <div style="display:flex;gap:8px;margin-bottom:12px">
+      <select class="fi" id="filtro-cliente" onchange="renderMaquinas()" style="flex:1">
+        <option value="">Todos los clientes</option>
+      </select>
+      <select class="fi" id="filtro-tipo" onchange="renderMaquinas()" style="flex:1">
+        <option value="">Todos los tipos</option>
+        <option>Cabina pintura</option>
+        <option>Elevador</option>
+        <option>Compresor</option>
+        <option>Soldadura</option>
+        <option>Otro</option>
+      </select>
+    </div>
     <div id="lista-maquinas"></div>
   </div>
 
+  <!-- PARTES -->
   <div class="screen" id="screen-intervenciones">
     <div class="screen-header">
       <span class="screen-title">Partes</span>
@@ -161,12 +228,13 @@ textarea.form-input{resize:vertical;min-height:72px;line-height:1.5}
     <div id="lista-intervenciones"></div>
   </div>
 
+  <!-- RESUMEN -->
   <div class="screen" id="screen-resumen">
     <div class="screen-header"><span class="screen-title">Resumen</span></div>
     <div id="resumen-content"></div>
   </div>
-
 </div>
+
 <nav class="nav">
   <button class="nav-btn active" onclick="showTab('maquinas',this)">
     <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
@@ -183,122 +251,122 @@ textarea.form-input{resize:vertical;min-height:72px;line-height:1.5}
 </nav>
 
 <!-- MODAL MÁQUINA -->
-<div class="modal-overlay" id="modal-maquina">
-<div class="modal">
+<div class="ov" id="modal-maquina"><div class="modal">
   <div class="modal-handle"></div>
   <div class="modal-header">
-    <span class="modal-title" id="modal-maq-titulo">Nueva máquina</span>
-    <button class="modal-close" onclick="cerrarModal('modal-maquina')">
-      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-    </button>
+    <span class="modal-title" id="maq-titulo">Nueva máquina</span>
+    <button class="modal-close" onclick="cerrarModal('modal-maquina')"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   </div>
-  <label class="form-label">Taller</label>
-  <select class="form-input" id="m-taller">
-    <option value="">— seleccionar —</option>
-    <option>HVT_Illescas</option>
-    <option>HVT_Olias</option>
-  </select>
-  <label class="form-label">Tipo de máquina</label>
+  <label class="fl">Cliente</label>
+  <select class="fi" id="m-cliente"><option value="">— seleccionar —</option></select>
+  <label class="fl">Sede</label>
+  <select class="fi" id="m-sede"><option value="">— seleccionar —</option></select>
+  <label class="fl">Tipo de máquina</label>
   <div class="chip-row" id="chips-tipo">
     <button class="chip on" onclick="selChip(this,'tipo','Cabina pintura')">Cabina pintura</button>
     <button class="chip" onclick="selChip(this,'tipo','Elevador')">Elevador</button>
     <button class="chip" onclick="selChip(this,'tipo','Compresor')">Compresor</button>
     <button class="chip" onclick="selChip(this,'tipo','Soldadura')">Soldadura</button>
+    <button class="chip" onclick="selChip(this,'tipo','Secador')">Secador</button>
     <button class="chip" onclick="selChip(this,'tipo','Otro')">Otro</button>
   </div>
-  <label class="form-label">ID / Código</label>
-  <input class="form-input" id="m-codigo" type="text" placeholder="ej. CAB-ILL-H1" autocapitalize="characters">
-  <label class="form-label">Marca / Modelo</label>
-  <input class="form-input" id="m-marca" type="text" placeholder="ej. Hildebrand">
+  <label class="fl">ID / Código</label>
+  <input class="fi" id="m-codigo" type="text" placeholder="ej. HVT-ILL-CAB-H1" autocapitalize="characters">
+  <label class="fl">Marca / Modelo</label>
+  <input class="fi" id="m-marca" type="text">
   <div class="row2">
-    <div><label class="form-label">Nº serie</label><input class="form-input" id="m-serie" type="text"></div>
-    <div><label class="form-label">Año</label><input class="form-input" id="m-anio" type="text" inputmode="numeric"></div>
+    <div><label class="fl">Nº serie</label><input class="fi" id="m-serie" type="text"></div>
+    <div><label class="fl">Año</label><input class="fi" id="m-anio" type="text" inputmode="numeric"></div>
   </div>
   <div id="extra-cabina">
-    <label class="form-label">Tipo arranque</label>
+    <label class="fl">Tipo arranque</label>
     <div class="chip-row" id="chips-arranque">
       <button class="chip on" onclick="selChip(this,'arranque','D-Y')">D-Y</button>
       <button class="chip" onclick="selChip(this,'arranque','Variador')">Variador</button>
       <button class="chip" onclick="selChip(this,'arranque','Directo')">Directo</button>
     </div>
-    <div class="subsection">
-      <div class="subsection-title">Motor impulsión</div>
-      <label class="form-label">Marca / modelo</label><input class="form-input" id="m-imp-marca" type="text" placeholder="ej. ABB M2AA 132">
+    <div class="subsect">
+      <div class="subsect-title">Motor impulsión</div>
+      <label class="fl">Marca / modelo</label><input class="fi" id="m-imp-marca" type="text">
       <div class="row2">
-        <div><label class="form-label">Potencia (kW)</label><input class="form-input" id="m-imp-kw" type="text" inputmode="decimal"></div>
-        <div><label class="form-label">rpm</label><input class="form-input" id="m-imp-rpm" type="text" inputmode="numeric"></div>
+        <div><label class="fl">kW</label><input class="fi" id="m-imp-kw" type="text" inputmode="decimal"></div>
+        <div><label class="fl">rpm</label><input class="fi" id="m-imp-rpm" type="text" inputmode="numeric"></div>
       </div>
       <div class="row2">
-        <div><label class="form-label">Corriente (A)</label><input class="form-input" id="m-imp-amp" type="text" inputmode="decimal"></div>
-        <div><label class="form-label">Cos φ</label><input class="form-input" id="m-imp-cos" type="text" inputmode="decimal"></div>
+        <div><label class="fl">Corriente (A)</label><input class="fi" id="m-imp-amp" type="text" inputmode="decimal"></div>
+        <div><label class="fl">Cos φ</label><input class="fi" id="m-imp-cos" type="text" inputmode="decimal"></div>
       </div>
-      <label class="form-label">Rodamiento frontal</label><input class="form-input" id="m-imp-rdf" type="text" placeholder="ej. 6208-2Z/C3" autocapitalize="characters">
-      <label class="form-label">Rodamiento trasero</label><input class="form-input" id="m-imp-rdt" type="text" autocapitalize="characters">
-      <label class="form-label">Referencia motor</label><input class="form-input" id="m-imp-ref" type="text">
-      <label class="form-label">Nº serie motor</label><input class="form-input" id="m-imp-ns" type="text">
+      <label class="fl">Rodamiento frontal</label><input class="fi" id="m-imp-rdf" type="text" autocapitalize="characters">
+      <label class="fl">Rodamiento trasero</label><input class="fi" id="m-imp-rdt" type="text" autocapitalize="characters">
+      <label class="fl">Referencia</label><input class="fi" id="m-imp-ref" type="text">
+      <label class="fl">Nº serie</label><input class="fi" id="m-imp-ns" type="text">
     </div>
-    <div class="subsection">
-      <div class="subsection-title">Motor extracción</div>
-      <label class="form-label">Marca / modelo</label><input class="form-input" id="m-ext-marca" type="text">
+    <div class="subsect">
+      <div class="subsect-title">Motor extracción</div>
+      <label class="fl">Marca / modelo</label><input class="fi" id="m-ext-marca" type="text">
       <div class="row2">
-        <div><label class="form-label">Potencia (kW)</label><input class="form-input" id="m-ext-kw" type="text" inputmode="decimal"></div>
-        <div><label class="form-label">rpm</label><input class="form-input" id="m-ext-rpm" type="text" inputmode="numeric"></div>
+        <div><label class="fl">kW</label><input class="fi" id="m-ext-kw" type="text" inputmode="decimal"></div>
+        <div><label class="fl">rpm</label><input class="fi" id="m-ext-rpm" type="text" inputmode="numeric"></div>
       </div>
       <div class="row2">
-        <div><label class="form-label">Corriente (A)</label><input class="form-input" id="m-ext-amp" type="text" inputmode="decimal"></div>
-        <div><label class="form-label">Cos φ</label><input class="form-input" id="m-ext-cos" type="text" inputmode="decimal"></div>
+        <div><label class="fl">Corriente (A)</label><input class="fi" id="m-ext-amp" type="text" inputmode="decimal"></div>
+        <div><label class="fl">Cos φ</label><input class="fi" id="m-ext-cos" type="text" inputmode="decimal"></div>
       </div>
-      <label class="form-label">Rodamiento frontal</label><input class="form-input" id="m-ext-rdf" type="text" autocapitalize="characters">
-      <label class="form-label">Rodamiento trasero</label><input class="form-input" id="m-ext-rdt" type="text" autocapitalize="characters">
-      <label class="form-label">Referencia motor</label><input class="form-input" id="m-ext-ref" type="text">
-      <label class="form-label">Nº serie motor</label><input class="form-input" id="m-ext-ns" type="text">
+      <label class="fl">Rodamiento frontal</label><input class="fi" id="m-ext-rdf" type="text" autocapitalize="characters">
+      <label class="fl">Rodamiento trasero</label><input class="fi" id="m-ext-rdt" type="text" autocapitalize="characters">
+      <label class="fl">Referencia</label><input class="fi" id="m-ext-ref" type="text">
+      <label class="fl">Nº serie</label><input class="fi" id="m-ext-ns" type="text">
     </div>
-    <div class="subsection">
-      <div class="subsection-title">Quemador</div>
-      <label class="form-label">Marca / modelo</label><input class="form-input" id="m-que-marca" type="text" placeholder="ej. Joanes Finterm AZ14">
-      <label class="form-label">Centralita</label><input class="form-input" id="m-que-central" type="text" placeholder="ej. LOA24">
-      <label class="form-label">Bomba</label><input class="form-input" id="m-que-bomba" type="text" placeholder="ej. Suntec">
+    <div class="subsect">
+      <div class="subsect-title">Quemador</div>
+      <label class="fl">Marca / modelo</label><input class="fi" id="m-que-marca" type="text">
+      <label class="fl">Centralita</label><input class="fi" id="m-que-central" type="text">
+      <label class="fl">Bomba</label><input class="fi" id="m-que-bomba" type="text">
       <div class="row2">
-        <div><label class="form-label">Chicle actual</label><input class="form-input" id="m-que-chicle" type="text" placeholder="ej. 3,0×60°"></div>
-        <div><label class="form-label">Aire</label><input class="form-input" id="m-que-aire" type="text" placeholder="ej. 2,0"></div>
+        <div><label class="fl">Chicle</label><input class="fi" id="m-que-chicle" type="text" placeholder="ej. 3,0×60°"></div>
+        <div><label class="fl">Aire</label><input class="fi" id="m-que-aire" type="text"></div>
       </div>
     </div>
   </div>
-  <label class="form-label">Fotos de la máquina</label>
-  <div class="foto-grid" id="fotos-maquina-grid"></div>
-  <input type="file" id="foto-maquina-input" accept="image/*" capture="environment" style="display:none" onchange="añadirFotoMaquina(event)">
-  <label class="form-label">Observaciones</label>
-  <textarea class="form-input" id="m-obs" placeholder="notas adicionales..."></textarea>
-  <button class="btn-full btn-primary" onclick="guardarMaquina()">Guardar</button>
-  <button class="btn-full btn-danger" id="btn-elim-maq" style="display:none" onclick="eliminarMaquina()">Eliminar máquina</button>
-  <button class="btn-full btn-ghost" onclick="cerrarModal('modal-maquina')">Cancelar</button>
-</div>
-</div>
+  <label class="fl">Fotos</label>
+  <div class="foto-grid" id="fotos-maq-grid"></div>
+  <input type="file" id="foto-maq-in" accept="image/*" style="display:none" multiple onchange="addFotos('maq',event)">
+  <label class="fl">Observaciones</label>
+  <textarea class="fi" id="m-obs"></textarea>
+  <button class="btn btn-p" onclick="guardarMaquina()">Guardar</button>
+  <button class="btn btn-d" id="btn-elim-maq" style="display:none" onclick="eliminarMaquina()">Eliminar máquina</button>
+  <button class="btn btn-g" onclick="cerrarModal('modal-maquina')">Cancelar</button>
+</div></div>
 
 <!-- MODAL INTERVENCIÓN -->
-<div class="modal-overlay" id="modal-intervencion">
-<div class="modal">
+<div class="ov" id="modal-int"><div class="modal">
   <div class="modal-handle"></div>
   <div class="modal-header">
     <span class="modal-title">Nueva intervención</span>
-    <button class="modal-close" onclick="cerrarModal('modal-intervencion')">
-      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-    </button>
+    <button class="modal-close" onclick="cerrarModal('modal-int')"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   </div>
-  <label class="form-label">Fecha</label>
-  <input class="form-input" id="i-fecha" type="date">
-  <label class="form-label">Máquina</label>
-  <select class="form-input" id="i-maquina">
-    <option value="">— seleccionar —</option>
-  </select>
-  <label class="form-label">Tipo</label>
+  <label class="fl">Fecha</label>
+  <input class="fi" id="i-fecha" type="date">
+  <div class="row2">
+    <div>
+      <label class="fl">Hora inicio</label>
+      <input class="fi" id="i-hinicio" type="time">
+    </div>
+    <div>
+      <label class="fl">Hora fin</label>
+      <input class="fi" id="i-hfin" type="time">
+    </div>
+  </div>
+  <label class="fl">Máquina</label>
+  <select class="fi" id="i-maquina"><option value="">— seleccionar —</option></select>
+  <label class="fl">Tipo</label>
   <div class="chip-row" id="chips-int-tipo">
     <button class="chip on" onclick="selChip(this,'int-tipo','Correctivo')">Correctivo</button>
     <button class="chip" onclick="selChip(this,'int-tipo','Preventivo')">Preventivo</button>
     <button class="chip" onclick="selChip(this,'int-tipo','Revisión')">Revisión</button>
     <button class="chip" onclick="selChip(this,'int-tipo','Inspección')">Inspección</button>
   </div>
-  <label class="form-label">Componente</label>
+  <label class="fl">Componente</label>
   <div class="chip-row" id="chips-comp">
     <button class="chip on" onclick="selChip(this,'comp','Motor/Turbina')">Motor/Turbina</button>
     <button class="chip" onclick="selChip(this,'comp','Quemador')">Quemador</button>
@@ -306,493 +374,600 @@ textarea.form-input{resize:vertical;min-height:72px;line-height:1.5}
     <button class="chip" onclick="selChip(this,'comp','Eléctrico')">Eléctrico</button>
     <button class="chip" onclick="selChip(this,'comp','Hidráulico')">Hidráulico</button>
     <button class="chip" onclick="selChip(this,'comp','Neumático')">Neumático</button>
+    <button class="chip" onclick="selChip(this,'comp','Iluminación')">Iluminación</button>
     <button class="chip" onclick="selChip(this,'comp','Otro')">Otro</button>
   </div>
-  <label class="form-label">Tiempo (horas)</label>
-  <input class="form-input" id="i-horas" type="number" min="0" step="0.5" placeholder="ej. 2" inputmode="decimal">
-  <label class="form-label">Descripción del trabajo</label>
-  <textarea class="form-input" id="i-desc" placeholder="qué se hizo, qué se encontró..."></textarea>
-  <label class="form-label">Materiales / referencias</label>
-  <textarea class="form-input" id="i-mat" placeholder="ej. Rodamientos 6208-2Z/C3 ×2..." style="min-height:60px"></textarea>
-  <label class="form-label">Fotos de la intervención</label>
-  <div class="foto-grid" id="fotos-intervencion-grid"></div>
-  <input type="file" id="foto-intervencion-input" accept="image/*" capture="environment" style="display:none" onchange="añadirFotoIntervencion(event)">
-  <label class="form-label">Observaciones / síntomas</label>
-  <textarea class="form-input" id="i-obs" placeholder="síntomas previos, recomendaciones..." style="min-height:60px"></textarea>
-  <button class="btn-full btn-primary" onclick="guardarIntervencion()">Guardar intervención</button>
-  <button class="btn-full btn-ghost" onclick="cerrarModal('modal-intervencion')">Cancelar</button>
-</div>
-</div>
+  <label class="fl">Descripción del trabajo</label>
+  <textarea class="fi" id="i-desc" placeholder="qué se hizo, qué se encontró..."></textarea>
+  <label class="fl">Materiales / referencias (para factura)</label>
+  <textarea class="fi" id="i-mat" placeholder="ej. Rodamientos 6208-2Z/C3 ×2 — Proveedor: SKF — 45€" style="min-height:60px"></textarea>
+  <label class="fl">Fotos</label>
+  <div class="foto-grid" id="fotos-int-grid"></div>
+  <input type="file" id="foto-int-in" accept="image/*" style="display:none" multiple onchange="addFotos('int',event)">
+  <label class="fl">Nota privada (no va a factura)</label>
+  <textarea class="fi" id="i-priv" placeholder="notas internas, contexto, síntomas previos..." style="min-height:60px;border-color:rgba(230,126,34,0.3)"></textarea>
+  <button class="btn btn-p" onclick="guardarIntervencion()">Guardar parte</button>
+  <button class="btn btn-g" onclick="cerrarModal('modal-int')">Cancelar</button>
+</div></div>
 
-<!-- MODAL DETALLE -->
-<div class="modal-overlay" id="modal-detalle">
-<div class="modal">
+<!-- MODAL DETALLE MÁQUINA -->
+<div class="ov" id="modal-detalle"><div class="modal">
   <div class="modal-handle"></div>
   <div class="modal-header">
-    <span class="modal-title" id="detalle-titulo"></span>
-    <button class="modal-close" onclick="cerrarModal('modal-detalle')">
-      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-    </button>
+    <span class="modal-title" id="det-titulo"></span>
+    <button class="modal-close" onclick="cerrarModal('modal-detalle')"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   </div>
-  <div id="detalle-body"></div>
-  <button class="btn-full btn-ghost" style="margin-top:16px" onclick="editarDesdeDet()">Editar ficha</button>
-  <button class="btn-full btn-ghost" onclick="nuevaIntDesdeDet()">Añadir intervención</button>
-  <button class="btn-full btn-ghost" onclick="cerrarModal('modal-detalle')">Cerrar</button>
-</div>
-</div>
+  <div id="det-body"></div>
+  <button class="btn btn-g" style="margin-top:16px" onclick="editarDesdeDet()">Editar ficha</button>
+  <button class="btn btn-g" onclick="nuevaIntDesdeDet()">Añadir parte</button>
+  <button class="btn btn-g" onclick="cerrarModal('modal-detalle')">Cerrar</button>
+</div></div>
 
-<!-- VISOR DE FOTO -->
-<div class="foto-viewer" id="foto-viewer">
-  <button class="foto-viewer-close" onclick="cerrarVisor()">✕</button>
-  <img id="foto-viewer-img" src="" alt="foto">
-  <button class="foto-viewer-del" onclick="eliminarFotoActual()">Eliminar foto</button>
+<!-- VISOR FOTO -->
+<div class="fviewer" id="fviewer">
+  <button class="fv-close" onclick="cerrarVisor()">✕</button>
+  <img id="fv-img" src="" alt="foto">
+  <button class="fv-del" onclick="eliminarFotoActual()">Eliminar foto</button>
 </div>
 
 <script>
-let DB;
-let maquinas = [], intervenciones = [];
-let chips = { tipo:'Cabina pintura', arranque:'D-Y', 'int-tipo':'Correctivo', comp:'Motor/Turbina' };
-let editMaqId = null, detMaqId = null;
-let fotosTemp = { maquina:[], intervencion:[] };
-let visorCtx = null;
+// ── ESTADO ────────────────────────────────────────────────────────────────────
+let DB, maquinas=[], intervenciones=[], clientes=[], sedes=[];
+let chips={tipo:'Cabina pintura',arranque:'D-Y','int-tipo':'Correctivo',comp:'Motor/Turbina'};
+let editMaqId=null, detMaqId=null;
+let fotosTemp={maq:[],int:[]};
+let visorCtx=null;
+let pinBuffer='';
+let authed=false;
 
-// ── IndexedDB ────────────────────────────────────────────────────────────────
-function initDB() {
-  return new Promise((res,rej) => {
-    const req = indexedDB.open('SentinelField', 3);
-    req.onupgradeneeded = e => {
-      const db = e.target.result;
-      if (!db.objectStoreNames.contains('maquinas'))
-        db.createObjectStore('maquinas', {keyPath:'id'});
-      if (!db.objectStoreNames.contains('intervenciones'))
-        db.createObjectStore('intervenciones', {keyPath:'ts'});
-      if (!db.objectStoreNames.contains('fotos'))
-        db.createObjectStore('fotos', {keyPath:'id', autoIncrement:true});
-    };
-    req.onsuccess = e => { DB = e.target.result; res(); };
-    req.onerror = () => rej(req.error);
-  });
-}
-function dbGetAll(store) {
-  return new Promise((res,rej) => {
-    const req = DB.transaction(store,'readonly').objectStore(store).getAll();
-    req.onsuccess = () => res(req.result);
-    req.onerror = () => rej(req.error);
-  });
-}
-function dbPut(store, obj) {
-  return new Promise((res,rej) => {
-    const req = DB.transaction(store,'readwrite').objectStore(store).put(obj);
-    req.onsuccess = () => res(req.result);
-    req.onerror = () => rej(req.error);
-  });
-}
-function dbDelete(store, key) {
-  return new Promise((res,rej) => {
-    const req = DB.transaction(store,'readwrite').objectStore(store).delete(key);
-    req.onsuccess = () => res();
-    req.onerror = () => rej(req.error);
-  });
-}
-function dbGetWhere(store, field, val) {
-  return new Promise((res,rej) => {
-    const req = DB.transaction(store,'readonly').objectStore(store).getAll();
-    req.onsuccess = () => res(req.result.filter(r => r[field] === val));
-    req.onerror = () => rej(req.error);
-  });
-}
-async function cargar() {
-  maquinas = await dbGetAll('maquinas');
-  intervenciones = await dbGetAll('intervenciones');
-  renderAll();
-}
+// ── PIN / BIOMETRÍA ───────────────────────────────────────────────────────────
+const PIN_KEY='sf_pin', CRED_KEY='sf_cred';
 
-// ── COMPRESIÓN DE FOTOS ───────────────────────────────────────────────────────
-function comprimirImagen(file, maxPx=1200, calidad=0.78) {
-  return new Promise(res => {
-    const reader = new FileReader();
-    reader.onload = e => {
-      const img = new Image();
-      img.onload = () => {
-        let w = img.width, h = img.height;
-        if (w > maxPx || h > maxPx) {
-          if (w > h) { h = Math.round(h * maxPx/w); w = maxPx; }
-          else { w = Math.round(w * maxPx/h); h = maxPx; }
-        }
-        const canvas = document.createElement('canvas');
-        canvas.width = w; canvas.height = h;
-        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-        res(canvas.toDataURL('image/jpeg', calidad));
-      };
-      img.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  });
-}
-
-// ── FOTOS TEMPORALES (durante edición) ───────────────────────────────────────
-async function añadirFotoMaquina(e) {
-  const file = e.target.files[0]; if (!file) return;
-  const b64 = await comprimirImagen(file);
-  fotosTemp.maquina.push(b64);
-  renderFotosTemp('maquinas', 'fotos-maquina-grid', 'foto-maquina-input');
-  e.target.value = '';
-}
-async function añadirFotoIntervencion(e) {
-  const file = e.target.files[0]; if (!file) return;
-  const b64 = await comprimirImagen(file);
-  fotosTemp.intervencion.push(b64);
-  renderFotosTemp('intervenciones', 'fotos-intervencion-grid', 'foto-intervencion-input');
-  e.target.value = '';
-}
-function renderFotosTemp(ctx, gridId, inputId) {
-  const arr = ctx === 'maquinas' ? fotosTemp.maquina : fotosTemp.intervencion;
-  const grid = document.getElementById(gridId);
-  let html = arr.map((b64,i) =>
-    `<img class="foto-thumb" src="${b64}" onclick="abrirVisor({tipo:'temp',ctx:'${ctx}',idx:${i}})">`
-  ).join('');
-  html += `<div class="foto-add" onclick="document.getElementById('${inputId}').click()">
-    <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
-    Foto
-  </div>`;
-  grid.innerHTML = html;
-}
-
-// ── VISOR DE FOTO ─────────────────────────────────────────────────────────────
-function abrirVisor(ctx) {
-  visorCtx = ctx;
-  let src = '';
-  if (ctx.tipo === 'temp') {
-    src = ctx.ctx === 'maquinas' ? fotosTemp.maquina[ctx.idx] : fotosTemp.intervencion[ctx.idx];
+async function initAuth(){
+  const storedPin=localStorage.getItem(PIN_KEY);
+  if(!storedPin){
+    // Primera vez: modo setup
+    document.getElementById('lock-sub').textContent='Crea tu PIN de 4 dígitos';
+    document.getElementById('setup-hint').textContent='Este PIN protege tus datos';
+    window._pinSetup=true;
+    window._pinFirst=null;
   } else {
-    src = ctx.src;
+    document.getElementById('lock-sub').textContent='Introduce tu PIN';
+    // Intentar Face ID si hay credencial guardada
+    const hasCred=localStorage.getItem(CRED_KEY);
+    if(hasCred && window.PublicKeyCredential){
+      document.getElementById('btn-faceid').style.display='block';
+      setTimeout(tryFaceID,400);
+    }
   }
-  document.getElementById('foto-viewer-img').src = src;
-  document.getElementById('foto-viewer').classList.add('open');
-}
-function cerrarVisor() {
-  document.getElementById('foto-viewer').classList.remove('open');
-  visorCtx = null;
-}
-async function eliminarFotoActual() {
-  if (!visorCtx) return;
-  if (visorCtx.tipo === 'temp') {
-    const arr = visorCtx.ctx === 'maquinas' ? fotosTemp.maquina : fotosTemp.intervencion;
-    arr.splice(visorCtx.idx, 1);
-    const gridId = visorCtx.ctx === 'maquinas' ? 'fotos-maquina-grid' : 'fotos-intervencion-grid';
-    const inputId = visorCtx.ctx === 'maquinas' ? 'foto-maquina-input' : 'foto-intervencion-input';
-    renderFotosTemp(visorCtx.ctx, gridId, inputId);
-  } else if (visorCtx.tipo === 'db') {
-    await dbDelete('fotos', visorCtx.id);
-    if (visorCtx.ctx === 'maquina') await renderFotosMaquinaDetalle(visorCtx.refId);
-    else await renderFotosIntervencionDetalle(visorCtx.refId);
-  }
-  cerrarVisor();
 }
 
-// ── FOTOS EN DETALLE (cargadas de DB) ────────────────────────────────────────
-async function renderFotosMaquinaDetalle(maqId) {
-  const fotos = await dbGetWhere('fotos','maqId', maqId);
-  const cont = document.getElementById('fotos-det-maq');
-  if (!cont) return;
-  if (fotos.length === 0) { cont.innerHTML = '<p style="font-size:13px;color:var(--text3)">Sin fotos.</p>'; return; }
-  cont.innerHTML = `<div class="foto-grid">${fotos.map(f =>
-    `<img class="foto-thumb" src="${f.data}" onclick="abrirVisor({tipo:'db',ctx:'maquina',refId:'${maqId}',id:${f.id},src:'${f.data}'})">`
-  ).join('')}</div>`;
+function pinKey(n){
+  if(!n) return;
+  if(pinBuffer.length>=4) return;
+  pinBuffer+=n;
+  updatePinDots();
+  if(pinBuffer.length===4) setTimeout(checkPin,150);
 }
-async function renderFotosIntervencionDetalle(ts) {
-  const fotos = await dbGetWhere('fotos','intTs', ts);
-  const cont = document.getElementById('fotos-det-int-' + ts);
-  if (!cont) return;
-  if (fotos.length === 0) { cont.innerHTML = ''; return; }
-  cont.innerHTML = `<div class="foto-grid" style="margin-top:6px">${fotos.map(f =>
-    `<img class="foto-thumb" src="${f.data}" onclick="abrirVisor({tipo:'db',ctx:'intervencion',refId:${ts},id:${f.id},src:'${f.data}'})">`
-  ).join('')}</div>`;
+function pinDel(){
+  pinBuffer=pinBuffer.slice(0,-1);
+  updatePinDots();
+}
+function updatePinDots(){
+  for(let i=0;i<4;i++)
+    document.getElementById('d'+i).classList.toggle('filled',i<pinBuffer.length);
+}
+function checkPin(){
+  const storedPin=localStorage.getItem(PIN_KEY);
+  if(window._pinSetup){
+    if(!window._pinFirst){
+      window._pinFirst=pinBuffer;
+      pinBuffer='';
+      updatePinDots();
+      document.getElementById('lock-sub').textContent='Repite el PIN para confirmar';
+      document.getElementById('lock-error').textContent='';
+      return;
+    }
+    if(pinBuffer===window._pinFirst){
+      localStorage.setItem(PIN_KEY,pinBuffer);
+      pinBuffer=''; window._pinSetup=false; window._pinFirst=null;
+      desbloquear();
+      ofrecerBiometria();
+    } else {
+      document.getElementById('lock-error').textContent='Los PINs no coinciden. Inténtalo de nuevo.';
+      pinBuffer=''; window._pinFirst=null;
+      updatePinDots();
+      document.getElementById('lock-sub').textContent='Crea tu PIN de 4 dígitos';
+    }
+    return;
+  }
+  if(pinBuffer===storedPin){
+    desbloquear();
+  } else {
+    document.getElementById('lock-error').textContent='PIN incorrecto';
+    pinBuffer=''; updatePinDots();
+    setTimeout(()=>document.getElementById('lock-error').textContent='',1500);
+  }
+}
+async function tryFaceID(){
+  if(!window.PublicKeyCredential) return;
+  try{
+    const credIdB64=localStorage.getItem(CRED_KEY);
+    if(!credIdB64){ await registrarBiometria(); return; }
+    const credId=Uint8Array.from(atob(credIdB64),c=>c.charCodeAt(0));
+    const assertion=await navigator.credentials.get({
+      publicKey:{
+        challenge:crypto.getRandomValues(new Uint8Array(32)),
+        allowCredentials:[{type:'public-key',id:credId}],
+        userVerification:'required',
+        timeout:30000
+      }
+    });
+    if(assertion) desbloquear();
+  } catch(e){
+    document.getElementById('lock-error').textContent='Face ID no disponible, usa el PIN';
+    setTimeout(()=>document.getElementById('lock-error').textContent='',2000);
+  }
+}
+async function ofrecerBiometria(){
+  if(!window.PublicKeyCredential) return;
+  const ok=confirm('¿Activar Face ID / Touch ID para acceder más rápido?');
+  if(ok) await registrarBiometria();
+}
+async function registrarBiometria(){
+  try{
+    const cred=await navigator.credentials.create({
+      publicKey:{
+        challenge:crypto.getRandomValues(new Uint8Array(32)),
+        rp:{name:'Sentinel Field',id:location.hostname},
+        user:{id:new Uint8Array(16),name:'usuario',displayName:'Técnico'},
+        pubKeyCredParams:[{alg:-7,type:'public-key'}],
+        authenticatorSelection:{userVerification:'required'},
+        timeout:30000
+      }
+    });
+    const b64=btoa(String.fromCharCode(...new Uint8Array(cred.rawId)));
+    localStorage.setItem(CRED_KEY,b64);
+    document.getElementById('btn-faceid').style.display='block';
+    document.getElementById('setup-hint').textContent='Face ID activado';
+  } catch(e){}
+}
+function desbloquear(){
+  authed=true;
+  document.getElementById('lock-screen').classList.add('hidden');
+  initDB().then(cargar);
+}
+
+// ── INDEXEDDB ─────────────────────────────────────────────────────────────────
+function initDB(){
+  return new Promise((res,rej)=>{
+    const req=indexedDB.open('SentinelField',4);
+    req.onupgradeneeded=e=>{
+      const db=e.target.result;
+      ['maquinas','intervenciones','fotos','clientes','sedes'].forEach(s=>{
+        if(!db.objectStoreNames.contains(s))
+          db.createObjectStore(s,{keyPath:s==='fotos'?undefined:'id',autoIncrement:s==='fotos'});
+      });
+    };
+    req.onsuccess=e=>{DB=e.target.result;res();};
+    req.onerror=()=>rej(req.error);
+  });
+}
+function dbAll(s){return new Promise((r,j)=>{const q=DB.transaction(s,'readonly').objectStore(s).getAll();q.onsuccess=()=>r(q.result);q.onerror=()=>j(q.error);})}
+function dbPut(s,o){return new Promise((r,j)=>{const q=DB.transaction(s,'readwrite').objectStore(s).put(o);q.onsuccess=()=>r(q.result);q.onerror=()=>j(q.error);})}
+function dbDel(s,k){return new Promise((r,j)=>{const q=DB.transaction(s,'readwrite').objectStore(s).delete(k);q.onsuccess=()=>r();q.onerror=()=>j(q.error);})}
+function dbWhere(s,f,v){return dbAll(s).then(a=>a.filter(r=>r[f]===v));}
+
+async function cargar(){
+  [clientes,sedes,maquinas,intervenciones]=await Promise.all([dbAll('clientes'),dbAll('sedes'),dbAll('maquinas'),dbAll('intervenciones')]);
+  // Importar datos HVT si DB vacía
+  if(clientes.length===0) await importarHVT();
+  else { renderFiltros(); renderAll(); }
+}
+
+async function importarHVT(){
+  const hvt={clientes:[{id:'HVT',nombre:'Hermanos Viñaras Toledo',notas:''}],sedes:[{id:'HVT-ILL',clienteId:'HVT',nombre:'HVT Illescas',ciudad:'Illescas',provincia:'Toledo'},{id:'HVT-OLI',clienteId:'HVT',nombre:'HVT Olías del Rey',ciudad:'Olías del Rey',provincia:'Toledo'}],maquinas:[{id:'HVT-ILL-CAB-H1',sedeId:'HVT-ILL',clienteId:'HVT',tipo:'Cabina pintura',marca:'Hildebrand',arranque:'D-Y',motImp:{marca:'Sin identificar',kw:'',rpm:'',rdf:'',rdt:'',ref:'',ns:''},motExt:{marca:'ABB M2AA 132 MBA-4',kw:'9.2',rpm:'1450',amp:'18.50',cos:'0.85',rdf:'6208-2Z/C3',rdt:'6208-2Z/C3',ref:'3GAA132004-PDB',ns:'71913-033/009'},quemador:{marca:'',central:'',bomba:'',chicle:'',aire:''},obs:'Motor impulsión sin placa. Motor reserva AZUL: rodamientos 6209-2Z/C3 x2.',fechaAlta:'2019-08-19'},{id:'HVT-OLI-CAB-H1',sedeId:'HVT-OLI',clienteId:'HVT',tipo:'Cabina pintura',marca:'Hildebrand',arranque:'D-Y',motImp:{marca:'',kw:'',rpm:'',rdf:'',rdt:'',ref:'',ns:''},motExt:{marca:'',kw:'',rpm:'',rdf:'',rdt:'',ref:'',ns:''},quemador:{marca:'Joanes Finterm AZ14 Special',central:'Landis & Gyr',bomba:'',chicle:'2.5×60°',aire:'1.75'},obs:'Quemador ref. 03302693 12/96.',fechaAlta:'2019-06-10'},{id:'HVT-OLI-CAB-H2',sedeId:'HVT-OLI',clienteId:'HVT',tipo:'Cabina pintura',marca:'Hildebrand',arranque:'D-Y',motImp:{marca:'',kw:'',rpm:'',rdf:'6208',rdt:'6206',ref:'',ns:''},motExt:{marca:'',kw:'',rpm:'',rdf:'',rdt:'',ref:'',ns:''},quemador:{marca:'Joanes Finterm AZ14 Special',central:'LOA24.171B27',bomba:'Suntec',chicle:'3.0×60°',aire:'2.0'},obs:'Quemador ref. 03402745 02/99. Placa relés cambiada 07/2023.',fechaAlta:'2019-06-09'},{id:'HVT-OLI-CAB-S3',sedeId:'HVT-OLI',clienteId:'HVT',tipo:'Cabina pintura',marca:'SAIMA',arranque:'',quemador:{marca:'Ecoflam Max20 TL',central:'Suntec A547A',bomba:'Suntec izq salida dcha',chicle:'3.0×60°',aire:'2.5'},obs:'GAMMA serie B/0521.',fechaAlta:'2019-06-06'},{id:'HVT-ILL-ELV-P01',sedeId:'HVT-ILL',clienteId:'HVT',tipo:'Elevador',marca:'ORLANDINI',serie:'002',obs:'Sin CE. Bulones desgaste. Soporte dcho 2ª elevación roto (2025).',fechaAlta:'2023-08-31'},{id:'HVT-ILL-ELV-P02',sedeId:'HVT-ILL',clienteId:'HVT',tipo:'Elevador',marca:'SILFA',modelo:'IPPO 39',serie:'001',obs:'Sin CE. Pérdida leve cilindro dcho.',fechaAlta:'2023-08-31'},{id:'HVT-ILL-ELV-P03',sedeId:'HVT-ILL',clienteId:'HVT',tipo:'Elevador',marca:'KONIGSTEIN',modelo:'KM3240A',serie:'2023103240A00075',anio:'2023',obs:'Nuevo 2024.',fechaAlta:'2024-08-30'},{id:'HVT-ILL-ELV-P04',sedeId:'HVT-ILL',clienteId:'HVT',tipo:'Elevador',marca:'CORGHI',modelo:'ERCO X5099 CT LT',serie:'CSH0212345',anio:'2022',obs:'',fechaAlta:'2022-01-01'},{id:'HVT-ILL-ELV-P05',sedeId:'HVT-ILL',clienteId:'HVT',tipo:'Elevador',marca:'WERTHER',modelo:'STRATOS S39',serie:'608996',anio:'2017',obs:'Mal anclaje TD plataforma dcha.',fechaAlta:'2023-08-31'},{id:'HVT-ILL-ELV-P06',sedeId:'HVT-ILL',clienteId:'HVT',tipo:'Elevador',marca:'ISTOBAL',modelo:'4EB0600',serie:'01110710',anio:'2001',obs:'Correas SPZ950 x2. Cadena roza fondo.',fechaAlta:'2023-08-31'},{id:'HVT-ILL-ELV-P07',sedeId:'HVT-ILL',clienteId:'HVT',tipo:'Elevador',marca:'WERTHER',modelo:'STRATOS SRM',serie:'610524',anio:'2017',obs:'Desgaste uniones medias tijeras.',fechaAlta:'2023-08-31'},{id:'HVT-ILL-ELV-P08',sedeId:'HVT-ILL',clienteId:'HVT',tipo:'Elevador',marca:'CORGHI',modelo:'ERCO 4022N CEL',serie:'CSG021147S',anio:'2022',obs:'Correas A39 x2 x2.',fechaAlta:'2022-01-01'},{id:'HVT-ILL-ELV-P09',sedeId:'HVT-ILL',clienteId:'HVT',tipo:'Elevador',marca:'CORGHI',modelo:'ERCO 3222N CEL',serie:'CSF020907S',anio:'2022',obs:'Correas A39 x2 x2.',fechaAlta:'2022-01-01'},{id:'HVT-ILL-ELV-P10',sedeId:'HVT-ILL',clienteId:'HVT',tipo:'Elevador',marca:'RAVAGLIOLI',modelo:'RAV518 NL',serie:'03163',anio:'2006',obs:'FC bajada no funciona. Rodillo inf dcho gastado.',fechaAlta:'2006-01-01'},{id:'HVT-ILL-ELV-C01',sedeId:'HVT-ILL',clienteId:'HVT',tipo:'Elevador',marca:'SPANESI',modelo:'MINIBENCH',serie:'2297',anio:'2004',obs:'Grietas en apoyos fijos tijera.',fechaAlta:'2004-01-01'},{id:'HVT-ILL-ELV-C02',sedeId:'HVT-ILL',clienteId:'HVT',tipo:'Elevador',marca:'CAR O LINER',modelo:'SPEED BS13',serie:'8937',anio:'2020',obs:'',fechaAlta:'2020-01-01'},{id:'HVT-ILL-ELV-C03',sedeId:'HVT-ILL',clienteId:'HVT',tipo:'Elevador',marca:'CAR O LINER',modelo:'SPEED BS13',serie:'8931',anio:'2020',obs:'',fechaAlta:'2020-01-01'},{id:'HVT-ILL-ELV-C04',sedeId:'HVT-ILL',clienteId:'HVT',tipo:'Elevador',marca:'WERTHER',modelo:'STRATOS S39',serie:'611962',anio:'2018',obs:'',fechaAlta:'2018-01-01'},{id:'HVT-ILL-ELV-C05',sedeId:'HVT-ILL',clienteId:'HVT',tipo:'Elevador',marca:'WERTHER',modelo:'STRATOS S39',serie:'618210',anio:'2020',obs:'FC subida suelto.',fechaAlta:'2020-01-01'},{id:'HVT-ILL-DES-P01',sedeId:'HVT-ILL',clienteId:'HVT',tipo:'Desmontadora',marca:'CORGHI',modelo:'A210',serie:'CII089097',anio:'2012',obs:'',fechaAlta:'2012-01-01'},{id:'HVT-ILL-EQU-P01',sedeId:'HVT-ILL',clienteId:'HVT',tipo:'Equilibradora',marca:'CORGHI',modelo:'EM7240 STD DD NOCLIP PR',serie:'CGI048043',anio:'2010',obs:'Falta capota protección.',fechaAlta:'2010-01-01'},{id:'HVT-ILL-CMP-01',sedeId:'HVT-ILL',clienteId:'HVT',tipo:'Compresor',marca:'PUSKA',modelo:'Derecho',obs:'Horas: 53770 (sep-2025). Correas Z41.',fechaAlta:'2020-01-01'},{id:'HVT-ILL-CMP-02',sedeId:'HVT-ILL',clienteId:'HVT',tipo:'Compresor',marca:'PUSKA',modelo:'Izquierdo',obs:'Horas: 39967 (feb-2025).',fechaAlta:'2020-01-01'},{id:'HVT-ILL-SEC-01',sedeId:'HVT-ILL',clienteId:'HVT',tipo:'Secador',marca:'SERFRIAIR',modelo:'MKE305',serie:'3619MA16326',obs:'Presostato cambiado abr-2025.',fechaAlta:'2020-01-01'},{id:'HVT-OLI-ELV-P01',sedeId:'HVT-OLI',clienteId:'HVT',tipo:'Elevador',marca:'ORLANDINI',serie:'002',obs:'Retirado feb-2026.',fechaAlta:'2019-01-01'},{id:'HVT-OLI-ELV-P02',sedeId:'HVT-OLI',clienteId:'HVT',tipo:'Elevador',marca:'SILFA',modelo:'IPPO 39',serie:'001',obs:'Sin CE. Latiguillo cambiado feb-2026.',fechaAlta:'2019-01-01'},{id:'HVT-OLI-ELV-C01',sedeId:'HVT-OLI',clienteId:'HVT',tipo:'Elevador',marca:'TROMMELBERG',modelo:'TXB30Y',serie:'E0PA099',anio:'2016',obs:'',fechaAlta:'2016-01-01'},{id:'HVT-OLI-ELV-C02',sedeId:'HVT-OLI',clienteId:'HVT',tipo:'Elevador',marca:'WERTHER',modelo:'STRATOS SRE',serie:'618397',anio:'2020',obs:'Faltan 2 prisioneros cónicos 5mm x16.',fechaAlta:'2020-01-01'},{id:'HVT-OLI-CMP-01',sedeId:'HVT-OLI',clienteId:'HVT',tipo:'Compresor',marca:'PUSKA',obs:'Horas: 31883 / Carga: 18398 (mar-2026).',fechaAlta:'2020-01-01'},{id:'HVT-OLI-CMP-02',sedeId:'HVT-OLI',clienteId:'HVT',tipo:'Compresor',marca:'FINI',modelo:'K-MAX 1510',serie:'4533820002',obs:'Horas: 20908 / Carga: 6943 (mar-2026).',fechaAlta:'2020-01-01'},{id:'HVT-OLI-SEC-01',sedeId:'HVT-OLI',clienteId:'HVT',tipo:'Secador',marca:'SERFRIAIR',obs:'Presostato cambiado abr-2026.',fechaAlta:'2020-01-01'}],intervenciones:[{ts:1566259200000,fecha:'2019-08-19',maqId:'HVT-ILL-CAB-H1',tipo:'Correctivo',componente:'Motor/Turbina',hinicio:'',hfin:'',desc:'Desmontar placa motor. Desmontar turbina. Montar motor y turbina. Pruebas.',materiales:'Motor 9,2KW ABB',priv:'',obs:''},{ts:1568592000000,fecha:'2019-09-13',maqId:'HVT-ILL-CAB-H1',tipo:'Preventivo',componente:'Motor/Turbina',hinicio:'',hfin:'',desc:'Cambio rodamientos motor extracción. Limpieza trampilla. Equilibrado turbina.',materiales:'',priv:'',obs:''},{ts:1602633600000,fecha:'2020-10-13',maqId:'HVT-ILL-CAB-H1',tipo:'Correctivo',componente:'Motor/Turbina',hinicio:'07:00',hfin:'13:00',desc:'Cambio turbina extracción. Cambio rodamientos. Limpieza habitáculo turbina y trampilla. Ajustar cierres puerta.',materiales:'',priv:'',obs:''},{ts:1641513600000,fecha:'2022-01-07',maqId:'HVT-ILL-CAB-H1',tipo:'Correctivo',componente:'Motor/Turbina',hinicio:'',hfin:'',desc:'Cambiar turbina y motor de reservas. Falta chaveta para motor ABB.',materiales:'',priv:'',obs:''},{ts:1656288000000,fecha:'2022-06-23',maqId:'HVT-ILL-CAB-H1',tipo:'Correctivo',componente:'Eléctrico',hinicio:'',hfin:'',desc:'Avería temperatura. Mala conexión sonda en caja de conexiones. Pruebas ok.',materiales:'',priv:'',obs:''},{ts:1718323200000,fecha:'2024-06-14',maqId:'HVT-ILL-CAB-H1',tipo:'Preventivo',componente:'Filtros',hinicio:'',hfin:'',desc:'Cambio de prefiltros x2.',materiales:'Prefiltros x2',priv:'',obs:''},{ts:1719532800000,fecha:'2024-06-28',maqId:'HVT-ILL-CAB-H1',tipo:'Correctivo',componente:'Motor/Turbina',hinicio:'',hfin:'',desc:'Cambiar turbina. Limpiar habitáculo turbina.',materiales:'',priv:'',obs:''},{ts:1734566400000,fecha:'2024-12-19',maqId:'HVT-ILL-CAB-H1',tipo:'Preventivo',componente:'Quemador',hinicio:'',hfin:'',desc:'Mantenimiento quemador. Chicle 3,5×60. Limpieza cristales pantallas dcho x4 e izq x4.',materiales:'Chicle 3,5×60',priv:'',obs:''},{ts:1738886400000,fecha:'2025-02-07',maqId:'HVT-ILL-CAB-H1',tipo:'Correctivo',componente:'Motor/Turbina',hinicio:'14:45',hfin:'15:45',desc:'Cambio turbina y motor impulsión.',materiales:'Tornillos M10x40 x4, arandelas, grover',priv:'',obs:''},{ts:1740700800000,fecha:'2025-02-28',maqId:'HVT-ILL-CAB-H1',tipo:'Preventivo',componente:'Quemador',hinicio:'',hfin:'',desc:'Revisar quemador. Cambiar electrodos. Colocar tornillo mirilla. Regular aire.',materiales:'Electrodos',priv:'',obs:''},{ts:1742428800000,fecha:'2025-03-20',maqId:'HVT-ILL-CAB-H1',tipo:'Correctivo',componente:'Eléctrico',hinicio:'',hfin:'',desc:'Falla luces automático bajado. Posible fallo contactor 230V 9A.',materiales:'',priv:'',obs:''},{ts:1743724800000,fecha:'2025-04-03',maqId:'HVT-ILL-CAB-H1',tipo:'Correctivo',componente:'Quemador',hinicio:'',hfin:'',desc:'Revisar chimenea por humos. Reportan consumo excesivo gasoil.',materiales:'',priv:'',obs:''},{ts:1742169600000,fecha:'2026-03-12',maqId:'HVT-ILL-CAB-H1',tipo:'Correctivo',componente:'Motor/Turbina',hinicio:'14:00',hfin:'18:00',desc:'Cambio turbina y motor. Motor ABB instalado. Cambio de fases. Prefiltros x2.',materiales:'Motor ABB, prefiltros x2, tornillos M10x40 x4',priv:'',obs:''},{ts:1622678400000,fecha:'2021-06-03',maqId:'HVT-OLI-CAB-H2',tipo:'Correctivo',componente:'Motor/Turbina',hinicio:'',hfin:'',desc:'Cambio rodamientos extracción. Equilibrado turbina. Desmontaje y montaje completo.',materiales:'Rodamientos',priv:'',obs:''},{ts:1622937600000,fecha:'2021-06-06',maqId:'HVT-OLI-CAB-H2',tipo:'Preventivo',componente:'Quemador',hinicio:'',hfin:'',desc:'Quemador Joanes Finterm AZ14. Chicle 3,0×60° aire=2. Limpieza turbina.',materiales:'Chicle 3,0×60°',priv:'',obs:''},{ts:1622851200000,fecha:'2021-06-05',maqId:'HVT-OLI-CAB-H1',tipo:'Preventivo',componente:'Quemador',hinicio:'',hfin:'',desc:'Quemador Joanes Finterm AZ14. Chicle 2,5×60° aire=1,5. Cambio electrodo.',materiales:'Chicle 2,5×60°, electrodo',priv:'',obs:''},{ts:1687737600000,fecha:'2023-06-26',maqId:'HVT-OLI-CAB-H2',tipo:'Correctivo',componente:'Eléctrico',hinicio:'',hfin:'',desc:'Presostato roto. Cambio electroválvula. Cambio válvula 1/2".',materiales:'Presostato, electroválvula',priv:'',obs:''},{ts:1689897600000,fecha:'2023-07-21',maqId:'HVT-OLI-CAB-H2',tipo:'Correctivo',componente:'Eléctrico',hinicio:'',hfin:'',desc:'Cambio de placa de relés.',materiales:'Placa relés',priv:'',obs:''},{ts:1689984000000,fecha:'2023-07-22',maqId:'HVT-OLI-CAB-H1',tipo:'Preventivo',componente:'Quemador',hinicio:'',hfin:'',desc:'Mantenimiento quemador. Chicle 2,5×60° aire=1,75. Filtro bomba poco sucio.',materiales:'Chicle 2,5×60°',priv:'',obs:''},{ts:1690070400000,fecha:'2023-07-23',maqId:'HVT-OLI-CAB-H2',tipo:'Preventivo',componente:'Quemador',hinicio:'',hfin:'',desc:'Mantenimiento quemador. Chicle 3,0×60° aire=2.',materiales:'Chicle 3,0×60°',priv:'',obs:''},{ts:1708128000000,fecha:'2024-02-17',maqId:'HVT-OLI-CAB-H1',tipo:'Preventivo',componente:'Quemador',hinicio:'',hfin:'',desc:'Limpieza electrodos quemador. Pruebas ok.',materiales:'',priv:'',obs:''},{ts:1724371200000,fecha:'2024-08-23',maqId:'HVT-OLI-CAB-H1',tipo:'Correctivo',componente:'Motor/Turbina',hinicio:'',hfin:'',desc:'Cambio rodamientos turbina extracción. Desmontaje, traslado para cambio, montaje.',materiales:'Rodamientos turbina extracción',priv:'',obs:''},{ts:1724630400000,fecha:'2024-08-26',maqId:'HVT-OLI-CAB-H2',tipo:'Correctivo',componente:'Motor/Turbina',hinicio:'',hfin:'',desc:'Cambio servomotor. Limpieza trampilla recirculación.',materiales:'Servomotor',priv:'',obs:''},{ts:1762300800000,fecha:'2025-11-05',maqId:'HVT-OLI-CAB-H2',tipo:'Inspección',componente:'Motor/Turbina',hinicio:'',hfin:'',desc:'Ruido rodamientos motor impulsión. Ref. 6208/6206.',materiales:'',priv:'Detectado ruido previo al fallo',obs:''},{ts:1764892800000,fecha:'2025-11-28',maqId:'HVT-OLI-CAB-H2',tipo:'Correctivo',componente:'Motor/Turbina',hinicio:'17:00',hfin:'20:00',desc:'Desmontar turbinas impulsión y extracción. Rodamientos 6206-6208. Motor impulsión nunca desmontado, rodamiento posterior gastado.',materiales:'Rodamientos 6206 x2, 6208 x2',priv:'',obs:''},{ts:1764979200000,fecha:'2025-12-01',maqId:'HVT-OLI-CAB-H2',tipo:'Correctivo',componente:'Motor/Turbina',hinicio:'12:30',hfin:'17:30',desc:'Limpiar turbina impulsión. Montar turbinas. Cambiar terminales por ojalillo. Limpiar compuerta.',materiales:'Terminales con ojalillo',priv:'',obs:''},{ts:1741824000000,fecha:'2026-03-13',maqId:'HVT-OLI-CAB-H2',tipo:'Preventivo',componente:'Quemador',hinicio:'17:00',hfin:'18:00',desc:'Mantenimiento quemador. Chicle 3,0×60. Cambio electrodos.',materiales:'Chicle 3,0×60, electrodos',priv:'',obs:''},{ts:1742342400000,fecha:'2026-03-19',maqId:'HVT-OLI-CAB-H2',tipo:'Correctivo',componente:'Quemador',hinicio:'16:00',hfin:'16:30',desc:'Ajustar racor gasoil a inyector. Goteaba poco.',materiales:'',priv:'',obs:''},{ts:1742428800000,fecha:'2026-03-20',maqId:'HVT-OLI-CAB-H1',tipo:'Preventivo',componente:'Quemador',hinicio:'16:00',hfin:'17:30',desc:'Mantenimiento quemador. Chicle 2,5×60. Colocar bulones.',materiales:'Chicle 2,5×60, bulones',priv:'',obs:''},{ts:1744416000000,fecha:'2026-04-12',maqId:'HVT-OLI-CAB-H1',tipo:'Correctivo',componente:'Motor/Turbina',hinicio:'11:00',hfin:'16:00',desc:'Retirar motor y turbina extracción. Montar motor y turbina. Limpieza trampilla salida y compuerta.',materiales:'',priv:'',obs:''}]};
+
+  for(const c of hvt.clientes) await dbPut('clientes',c);
+  for(const s of hvt.sedes) await dbPut('sedes',s);
+  for(const m of hvt.maquinas) await dbPut('maquinas',m);
+  for(const i of hvt.intervenciones) await dbPut('intervenciones',i);
+  [clientes,sedes,maquinas,intervenciones]=await Promise.all([dbAll('clientes'),dbAll('sedes'),dbAll('maquinas'),dbAll('intervenciones')]);
+  renderFiltros(); renderAll();
 }
 
 // ── TABS ──────────────────────────────────────────────────────────────────────
-function showTab(tab, btn) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('screen-' + tab).classList.add('active');
+function showTab(tab,btn){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('screen-'+tab).classList.add('active');
   btn.classList.add('active');
-  if (tab === 'resumen') renderResumen();
+  if(tab==='resumen') renderResumen();
 }
 
 // ── CHIPS ─────────────────────────────────────────────────────────────────────
-function selChip(btn, key, val) {
-  chips[key] = val;
-  btn.closest('.chip-row').querySelectorAll('.chip').forEach(c => c.classList.remove('on'));
+function selChip(btn,key,val){
+  chips[key]=val;
+  btn.closest('.chip-row').querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));
   btn.classList.add('on');
-  if (key === 'tipo') toggleExtraCabina();
+  if(key==='tipo') document.getElementById('extra-cabina').style.display=val==='Cabina pintura'?'block':'none';
 }
-function toggleExtraCabina() {
-  document.getElementById('extra-cabina').style.display = chips.tipo === 'Cabina pintura' ? 'block' : 'none';
+function setChips(key,val){
+  chips[key]=val;
+  const row=document.getElementById('chips-'+key.replace('-','_'))||document.getElementById('chips-'+key);
+  if(!row) return;
+  row.querySelectorAll('.chip').forEach(c=>c.classList.toggle('on',c.textContent.trim()===val));
+}
+
+// ── FILTROS ───────────────────────────────────────────────────────────────────
+function renderFiltros(){
+  const sel=document.getElementById('filtro-cliente');
+  sel.innerHTML='<option value="">Todos los clientes</option>';
+  clientes.forEach(c=>{const o=document.createElement('option');o.value=c.id;o.textContent=c.nombre;sel.appendChild(o);});
+}
+
+// ── FOTOS ─────────────────────────────────────────────────────────────────────
+function comprimir(file){
+  return new Promise(res=>{
+    const r=new FileReader();
+    r.onload=e=>{
+      const img=new Image();
+      img.onload=()=>{
+        let w=img.width,h=img.height,mx=1200;
+        if(w>mx||h>mx){if(w>h){h=Math.round(h*mx/w);w=mx;}else{w=Math.round(w*mx/h);h=mx;}}
+        const c=document.createElement('canvas');c.width=w;c.height=h;
+        c.getContext('2d').drawImage(img,0,0,w,h);
+        res(c.toDataURL('image/jpeg',0.78));
+      };
+      img.src=e.target.result;
+    };
+    r.readAsDataURL(file);
+  });
+}
+async function addFotos(ctx,e){
+  const files=Array.from(e.target.files);
+  for(const f of files){
+    const b64=await comprimir(f);
+    fotosTemp[ctx].push(b64);
+  }
+  renderFotosTemp(ctx);
+  e.target.value='';
+}
+function renderFotosTemp(ctx){
+  const grid=document.getElementById('fotos-'+ctx+'-grid');
+  const inputId='foto-'+ctx+'-in';
+  let html=fotosTemp[ctx].map((b,i)=>`<img class="fthumb" src="${b}" onclick="abrirVisor({tipo:'temp',ctx:'${ctx}',idx:${i}})">`).join('');
+  html+=`<div class="fadd" onclick="document.getElementById('${inputId}').click()"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>Foto</div>`;
+  grid.innerHTML=html;
+}
+function abrirVisor(ctx){
+  visorCtx=ctx;
+  let src=ctx.tipo==='temp'?(ctx.ctx==='maq'?fotosTemp.maq[ctx.idx]:fotosTemp.int[ctx.idx]):ctx.src;
+  document.getElementById('fv-img').src=src;
+  document.getElementById('fviewer').classList.add('open');
+}
+function cerrarVisor(){document.getElementById('fviewer').classList.remove('open');visorCtx=null;}
+async function eliminarFotoActual(){
+  if(!visorCtx) return;
+  if(visorCtx.tipo==='temp'){
+    const arr=visorCtx.ctx==='maq'?fotosTemp.maq:fotosTemp.int;
+    arr.splice(visorCtx.idx,1);
+    renderFotosTemp(visorCtx.ctx);
+  } else if(visorCtx.tipo==='db'){
+    await dbDel('fotos',visorCtx.id);
+    if(visorCtx.ctx==='maq') await renderFotosDet('maq',visorCtx.refId,'maqId');
+    else await renderFotosDet('int',visorCtx.refId,'intTs');
+  }
+  cerrarVisor();
+}
+async function renderFotosDet(ctx,refId,field){
+  const fotos=await dbWhere('fotos',field,refId);
+  const cont=document.getElementById('fotos-det-'+ctx+'-'+refId);
+  if(!cont) return;
+  if(!fotos.length){cont.innerHTML='';return;}
+  cont.innerHTML=`<div class="foto-grid">${fotos.map(f=>`<img class="fthumb" src="${f.data}" onclick="abrirVisor({tipo:'db',ctx:'${ctx}',refId:${JSON.stringify(refId)},id:${f.id},src:'${f.data}'})">`).join('')}</div>`;
 }
 
 // ── MODAL MÁQUINA ─────────────────────────────────────────────────────────────
-function abrirModalMaquina(id) {
-  editMaqId = id || null;
-  const m = id ? maquinas.find(x => x.id === id) : null;
-  document.getElementById('modal-maq-titulo').textContent = m ? 'Editar máquina' : 'Nueva máquina';
-  document.getElementById('btn-elim-maq').style.display = m ? 'block' : 'none';
-  const campos = ['taller','codigo','marca','serie','anio','obs',
+function abrirModalMaquina(id){
+  editMaqId=id||null;
+  const m=id?maquinas.find(x=>x.id===id):null;
+  document.getElementById('maq-titulo').textContent=m?'Editar máquina':'Nueva máquina';
+  document.getElementById('btn-elim-maq').style.display=m?'block':'none';
+
+  // Poblar selectores de cliente/sede
+  const selCli=document.getElementById('m-cliente');
+  selCli.innerHTML='<option value="">— seleccionar —</option>';
+  clientes.forEach(c=>{const o=document.createElement('option');o.value=c.id;o.textContent=c.nombre;selCli.appendChild(o);});
+  selCli.onchange=()=>{
+    const selSede=document.getElementById('m-sede');
+    selSede.innerHTML='<option value="">— seleccionar —</option>';
+    sedes.filter(s=>s.clienteId===selCli.value).forEach(s=>{const o=document.createElement('option');o.value=s.id;o.textContent=s.nombre;selSede.appendChild(o);});
+  };
+  if(m){selCli.value=m.clienteId;selCli.onchange();}
+
+  const fs=['codigo','marca','serie','anio','obs',
     'imp-marca','imp-kw','imp-rpm','imp-amp','imp-cos','imp-rdf','imp-rdt','imp-ref','imp-ns',
     'ext-marca','ext-kw','ext-rpm','ext-amp','ext-cos','ext-rdf','ext-rdt','ext-ref','ext-ns',
     'que-marca','que-central','que-bomba','que-chicle','que-aire'];
-  campos.forEach(f => {
-    const el = document.getElementById('m-' + f); if (!el) return;
-    el.value = m ? (getNestedVal(m,f) || '') : '';
+  fs.forEach(f=>{
+    const el=document.getElementById('m-'+f);if(!el)return;
+    el.value=m?(getN(m,f)||''):'';
   });
-  const tipo = m ? m.tipo : 'Cabina pintura';
-  chips.tipo = tipo;
-  document.getElementById('chips-tipo').querySelectorAll('.chip').forEach(c =>
-    c.classList.toggle('on', c.textContent.trim() === tipo));
-  toggleExtraCabina();
-  const arr = m ? (m.arranque||'D-Y') : 'D-Y';
-  chips.arranque = arr;
-  document.getElementById('chips-arranque').querySelectorAll('.chip').forEach(c =>
-    c.classList.toggle('on', c.textContent.trim() === arr));
-  fotosTemp.maquina = [];
-  renderFotosTemp('maquinas','fotos-maquina-grid','foto-maquina-input');
+  if(m){document.getElementById('m-sede').value=m.sedeId||'';}
+
+  const tipo=m?m.tipo:'Cabina pintura';
+  chips.tipo=tipo;
+  document.getElementById('chips-tipo').querySelectorAll('.chip').forEach(c=>c.classList.toggle('on',c.textContent.trim()===tipo));
+  document.getElementById('extra-cabina').style.display=tipo==='Cabina pintura'?'block':'none';
+  const arr=m?(m.arranque||'D-Y'):'D-Y';
+  chips.arranque=arr;
+  document.getElementById('chips-arranque').querySelectorAll('.chip').forEach(c=>c.classList.toggle('on',c.textContent.trim()===arr));
+
+  fotosTemp.maq=[];
+  renderFotosTemp('maq');
   document.getElementById('modal-maquina').classList.add('open');
-  document.getElementById('main').style.overflow = 'hidden';
+  document.getElementById('main').style.overflow='hidden';
 }
-function getNestedVal(m,f) {
-  if (f.startsWith('imp-')) return m.motImp ? m.motImp[f.slice(4)] : '';
-  if (f.startsWith('ext-')) return m.motExt ? m.motExt[f.slice(4)] : '';
-  if (f.startsWith('que-')) return m.quemador ? m.quemador[f.slice(4)] : '';
+function getN(m,f){
+  if(f.startsWith('imp-'))return m.motImp?m.motImp[f.slice(4)]:'';
+  if(f.startsWith('ext-'))return m.motExt?m.motExt[f.slice(4)]:'';
+  if(f.startsWith('que-'))return m.quemador?m.quemador[f.slice(4)]:'';
   return m[f];
 }
-function v(id) { return (document.getElementById(id)?.value||'').trim(); }
+function v(id){return(document.getElementById(id)?.value||'').trim();}
 
-async function guardarMaquina() {
-  const taller = v('m-taller'), codigo = v('m-codigo');
-  if (!taller || !codigo) { alert('Taller y código son obligatorios'); return; }
-  const maq = {
-    id: codigo, taller, tipo: chips.tipo,
-    marca: v('m-marca'), serie: v('m-serie'), anio: v('m-anio'), obs: v('m-obs'),
-    fechaAlta: new Date().toISOString().slice(0,10)
-  };
-  if (chips.tipo === 'Cabina pintura') {
-    maq.arranque = chips.arranque;
-    maq.motImp = {marca:v('m-imp-marca'),kw:v('m-imp-kw'),rpm:v('m-imp-rpm'),amp:v('m-imp-amp'),cos:v('m-imp-cos'),rdf:v('m-imp-rdf'),rdt:v('m-imp-rdt'),ref:v('m-imp-ref'),ns:v('m-imp-ns')};
-    maq.motExt = {marca:v('m-ext-marca'),kw:v('m-ext-kw'),rpm:v('m-ext-rpm'),amp:v('m-ext-amp'),cos:v('m-ext-cos'),rdf:v('m-ext-rdf'),rdt:v('m-ext-rdt'),ref:v('m-ext-ref'),ns:v('m-ext-ns')};
-    maq.quemador = {marca:v('m-que-marca'),central:v('m-que-central'),bomba:v('m-que-bomba'),chicle:v('m-que-chicle'),aire:v('m-que-aire')};
+async function guardarMaquina(){
+  const cli=v('m-cliente'),sede=v('m-sede'),cod=v('m-codigo');
+  if(!cli||!sede||!cod){alert('Cliente, sede y código son obligatorios');return;}
+  const maq={id:cod,clienteId:cli,sedeId:sede,tipo:chips.tipo,marca:v('m-marca'),serie:v('m-serie'),anio:v('m-anio'),obs:v('m-obs'),fechaAlta:new Date().toISOString().slice(0,10)};
+  if(chips.tipo==='Cabina pintura'){
+    maq.arranque=chips.arranque;
+    maq.motImp={marca:v('m-imp-marca'),kw:v('m-imp-kw'),rpm:v('m-imp-rpm'),amp:v('m-imp-amp'),cos:v('m-imp-cos'),rdf:v('m-imp-rdf'),rdt:v('m-imp-rdt'),ref:v('m-imp-ref'),ns:v('m-imp-ns')};
+    maq.motExt={marca:v('m-ext-marca'),kw:v('m-ext-kw'),rpm:v('m-ext-rpm'),amp:v('m-ext-amp'),cos:v('m-ext-cos'),rdf:v('m-ext-rdf'),rdt:v('m-ext-rdt'),ref:v('m-ext-ref'),ns:v('m-ext-ns')};
+    maq.quemador={marca:v('m-que-marca'),central:v('m-que-central'),bomba:v('m-que-bomba'),chicle:v('m-que-chicle'),aire:v('m-que-aire')};
   }
-  await dbPut('maquinas', maq);
-  for (const b64 of fotosTemp.maquina) await dbPut('fotos', {maqId: codigo, data: b64, fecha: new Date().toISOString()});
-  maquinas = await dbGetAll('maquinas');
+  await dbPut('maquinas',maq);
+  for(const b of fotosTemp.maq) await dbPut('fotos',{maqId:cod,data:b,fecha:new Date().toISOString()});
+  maquinas=await dbAll('maquinas');
   cerrarModal('modal-maquina');
   renderMaquinas();
 }
-async function eliminarMaquina() {
-  if (!confirm('¿Eliminar ' + editMaqId + '?')) return;
-  await dbDelete('maquinas', editMaqId);
-  maquinas = await dbGetAll('maquinas');
+async function eliminarMaquina(){
+  if(!confirm('¿Eliminar '+editMaqId+'?'))return;
+  await dbDel('maquinas',editMaqId);
+  maquinas=await dbAll('maquinas');
   cerrarModal('modal-maquina');
   renderMaquinas();
 }
 
 // ── MODAL INTERVENCIÓN ────────────────────────────────────────────────────────
-function abrirModalIntervencion(maqId) {
-  document.getElementById('i-fecha').value = new Date().toISOString().slice(0,10);
-  const sel = document.getElementById('i-maquina');
-  sel.innerHTML = '<option value="">— seleccionar —</option>';
-  maquinas.forEach(m => {
-    const o = document.createElement('option');
-    o.value = m.id; o.textContent = m.taller.replace('HVT_','') + ' — ' + m.id;
+function abrirModalIntervencion(maqId){
+  const now=new Date();
+  document.getElementById('i-fecha').value=now.toISOString().slice(0,10);
+  document.getElementById('i-hinicio').value=now.toTimeString().slice(0,5);
+  document.getElementById('i-hfin').value='';
+  const sel=document.getElementById('i-maquina');
+  sel.innerHTML='<option value="">— seleccionar —</option>';
+  maquinas.forEach(m=>{
+    const s=sedes.find(x=>x.id===m.sedeId);
+    const o=document.createElement('option');
+    o.value=m.id;o.textContent=(s?s.nombre.replace('HVT ',''):'')+'  —  '+m.id;
     sel.appendChild(o);
   });
-  if (maqId) sel.value = maqId;
-  ['i-desc','i-mat','i-obs'].forEach(id => document.getElementById(id).value = '');
-  document.getElementById('i-horas').value = '';
-  chips['int-tipo'] = 'Correctivo'; chips.comp = 'Motor/Turbina';
-  document.getElementById('chips-int-tipo').querySelectorAll('.chip').forEach((c,i) => c.classList.toggle('on',i===0));
-  document.getElementById('chips-comp').querySelectorAll('.chip').forEach((c,i) => c.classList.toggle('on',i===0));
-  fotosTemp.intervencion = [];
-  renderFotosTemp('intervenciones','fotos-intervencion-grid','foto-intervencion-input');
-  document.getElementById('modal-intervencion').classList.add('open');
-  document.getElementById('main').style.overflow = 'hidden';
+  if(maqId) sel.value=maqId;
+  ['i-desc','i-mat','i-priv'].forEach(id=>document.getElementById(id).value='');
+  chips['int-tipo']='Correctivo';chips.comp='Motor/Turbina';
+  document.getElementById('chips-int-tipo').querySelectorAll('.chip').forEach((c,i)=>c.classList.toggle('on',i===0));
+  document.getElementById('chips-comp').querySelectorAll('.chip').forEach((c,i)=>c.classList.toggle('on',i===0));
+  fotosTemp.int=[];
+  renderFotosTemp('int');
+  document.getElementById('modal-int').classList.add('open');
+  document.getElementById('main').style.overflow='hidden';
 }
-async function guardarIntervencion() {
-  const maqId = document.getElementById('i-maquina').value;
-  const desc = v('i-desc');
-  if (!maqId || !desc) { alert('Máquina y descripción son obligatorias'); return; }
-  const ts = Date.now();
-  const interv = {
-    ts, fecha: document.getElementById('i-fecha').value,
-    maqId, tipo: chips['int-tipo'], componente: chips.comp,
-    horas: v('i-horas'), desc, materiales: v('i-mat'), obs: v('i-obs')
-  };
-  await dbPut('intervenciones', interv);
-  for (const b64 of fotosTemp.intervencion) await dbPut('fotos', {intTs: ts, maqId, data: b64, fecha: new Date().toISOString()});
-  intervenciones = await dbGetAll('intervenciones');
-  cerrarModal('modal-intervencion');
+async function guardarIntervencion(){
+  const maqId=document.getElementById('i-maquina').value;
+  const desc=v('i-desc');
+  if(!maqId||!desc){alert('Máquina y descripción son obligatorias');return;}
+  const ts=Date.now();
+  const interv={ts,fecha:document.getElementById('i-fecha').value,hinicio:v('i-hinicio'),hfin:v('i-hfin'),maqId,tipo:chips['int-tipo'],componente:chips.comp,desc,materiales:v('i-mat'),priv:v('i-priv'),obs:''};
+  await dbPut('intervenciones',interv);
+  for(const b of fotosTemp.int) await dbPut('fotos',{intTs:ts,maqId,data:b,fecha:new Date().toISOString()});
+  intervenciones=await dbAll('intervenciones');
+  cerrarModal('modal-int');
   renderIntervenciones();
 }
 
 // ── DETALLE MÁQUINA ───────────────────────────────────────────────────────────
-async function abrirDetalle(id) {
-  detMaqId = id;
-  const m = maquinas.find(x => x.id === id);
-  document.getElementById('detalle-titulo').textContent = m.id;
-  const dr = (k,vv) => vv ? `<div class="detail-row"><span class="detail-key">${k}</span><span class="detail-val">${vv}</span></div>` : '';
-  let html = dr('Taller',m.taller) + dr('Tipo',m.tipo) + dr('Marca',m.marca) + dr('Serie',m.serie) + dr('Año',m.anio);
-  if (m.arranque) html += dr('Arranque',m.arranque);
-  if (m.motImp?.marca) {
-    html += '<div class="section-sep">Motor impulsión</div>';
-    html += dr('Marca',m.motImp.marca) + dr('Referencia',m.motImp.ref);
-    if (m.motImp.kw) html += dr('Potencia / rpm', m.motImp.kw+' kW · '+m.motImp.rpm+' rpm');
-    if (m.motImp.amp) html += dr('Corriente / Cos φ', m.motImp.amp+' A · '+m.motImp.cos);
-    if (m.motImp.rdf) html += dr('Rodamientos', m.motImp.rdf+' / '+m.motImp.rdt);
-    html += dr('Nº serie',m.motImp.ns);
+async function abrirDetalle(id){
+  detMaqId=id;
+  const m=maquinas.find(x=>x.id===id);
+  const s=sedes.find(x=>x.id===m.sedeId);
+  const c=clientes.find(x=>x.id===m.clienteId);
+  document.getElementById('det-titulo').textContent=m.id;
+  const dr=(k,vv)=>vv?`<div class="dr"><span class="dk">${k}</span><span class="dv">${vv}</span></div>`:'';
+  let html=dr('Cliente',c?.nombre)+dr('Sede',s?.nombre)+dr('Tipo',m.tipo)+dr('Marca',m.marca)+dr('Serie',m.serie)+dr('Año',m.anio);
+  if(m.arranque) html+=dr('Arranque',m.arranque);
+  if(m.motExt?.marca){
+    html+='<div class="sep">Motor extracción</div>';
+    html+=dr('Marca',m.motExt.marca)+dr('Referencia',m.motExt.ref);
+    if(m.motExt.kw) html+=dr('Potencia/rpm',m.motExt.kw+' kW · '+m.motExt.rpm+' rpm');
+    if(m.motExt.amp) html+=dr('Corriente/Cosφ',m.motExt.amp+' A · '+m.motExt.cos);
+    if(m.motExt.rdf) html+=dr('Rodamientos',m.motExt.rdf+' / '+m.motExt.rdt);
+    html+=dr('Nº serie',m.motExt.ns);
   }
-  if (m.motExt?.marca) {
-    html += '<div class="section-sep">Motor extracción</div>';
-    html += dr('Marca',m.motExt.marca) + dr('Referencia',m.motExt.ref);
-    if (m.motExt.kw) html += dr('Potencia / rpm', m.motExt.kw+' kW · '+m.motExt.rpm+' rpm');
-    if (m.motExt.rdf) html += dr('Rodamientos', m.motExt.rdf+' / '+m.motExt.rdt);
-    html += dr('Nº serie',m.motExt.ns);
+  if(m.motImp?.marca||m.motImp?.rdf){
+    html+='<div class="sep">Motor impulsión</div>';
+    html+=dr('Marca',m.motImp.marca)+dr('Referencia',m.motImp.ref);
+    if(m.motImp.kw) html+=dr('Potencia/rpm',m.motImp.kw+' kW · '+m.motImp.rpm+' rpm');
+    if(m.motImp.rdf) html+=dr('Rodamientos',m.motImp.rdf+' / '+m.motImp.rdt);
+    html+=dr('Nº serie',m.motImp.ns);
   }
-  if (m.quemador?.marca) {
-    html += '<div class="section-sep">Quemador</div>';
-    html += dr('Modelo',m.quemador.marca) + dr('Centralita',m.quemador.central) + dr('Bomba',m.quemador.bomba);
-    if (m.quemador.chicle) html += dr('Chicle / Aire', m.quemador.chicle+' · '+m.quemador.aire);
+  if(m.quemador?.marca){
+    html+='<div class="sep">Quemador</div>';
+    html+=dr('Modelo',m.quemador.marca)+dr('Centralita',m.quemador.central)+dr('Bomba',m.quemador.bomba);
+    if(m.quemador.chicle) html+=dr('Chicle/Aire',m.quemador.chicle+' · '+m.quemador.aire);
   }
-  html += '<div class="section-sep">Fotos</div><div id="fotos-det-maq"></div>';
-  const ints = intervenciones.filter(i => i.maqId === m.id).sort((a,b) => b.ts-a.ts);
-  html += `<div class="section-sep">Intervenciones (${ints.length})</div>`;
-  if (ints.length === 0) {
-    html += '<p style="font-size:13px;color:var(--text3)">Sin intervenciones registradas.</p>';
-  } else {
-    ints.slice(0,10).forEach(i => {
-      const badge = i.tipo==='Correctivo'?'badge-red':i.tipo==='Preventivo'?'badge-green':'badge-gray';
-      html += `<div class="int-item">
-        <div class="int-meta">${i.fecha} · <span class="badge ${badge}" style="font-size:10px;padding:1px 6px">${i.tipo}</span> · ${i.componente}${i.horas?' · '+i.horas+'h':''}</div>
-        <div class="int-desc">${i.desc}</div>
-        ${i.materiales?`<div class="int-mat">${i.materiales}</div>`:''}
-        <div id="fotos-det-int-${i.ts}"></div>
-      </div>`;
-    });
-  }
-  if (m.obs) html += `<p style="font-size:13px;color:var(--text2);margin-top:8px">${m.obs}</p>`;
-  document.getElementById('detalle-body').innerHTML = html;
+  html+='<div class="sep">Fotos máquina</div><div id="fotos-det-maq-'+id+'"><p style="font-size:13px;color:var(--text3)">Cargando...</p></div>';
+  const ints=intervenciones.filter(i=>i.maqId===id).sort((a,b)=>b.ts-a.ts);
+  html+=`<div class="sep">Intervenciones (${ints.length})</div>`;
+  if(!ints.length) html+='<p style="font-size:13px;color:var(--text3)">Sin intervenciones registradas.</p>';
+  else ints.slice(0,12).forEach(i=>{
+    const bd=i.tipo==='Correctivo'?'b-red':i.tipo==='Preventivo'?'b-green':'b-gray';
+    html+=`<div class="ii">
+      <div class="ii-meta">${i.fecha}${i.hinicio?' '+i.hinicio:''}${i.hfin?'–'+i.hfin:''} · <span class="badge ${bd}" style="font-size:10px;padding:1px 6px">${i.tipo}</span> · ${i.componente}</div>
+      <div class="ii-desc">${i.desc}</div>
+      ${i.materiales?`<div class="ii-mat">${i.materiales}</div>`:''}
+      ${i.priv?`<div class="nota-priv"><div class="nota-priv-label">Nota privada</div>${i.priv}</div>`:''}
+      <div id="fotos-det-int-${i.ts}"></div>
+    </div>`;
+  });
+  if(m.obs) html+=`<p style="font-size:13px;color:var(--text2);margin-top:8px">${m.obs}</p>`;
+  document.getElementById('det-body').innerHTML=html;
   document.getElementById('modal-detalle').classList.add('open');
-  document.getElementById('main').style.overflow = 'hidden';
-  await renderFotosMaquinaDetalle(id);
-  for (const i of ints.slice(0,10)) await renderFotosIntervencionDetalle(i.ts);
+  document.getElementById('main').style.overflow='hidden';
+  await renderFotosDet('maq',id,'maqId');
+  for(const i of ints.slice(0,12)) await renderFotosDet('int',i.ts,'intTs');
 }
-function editarDesdeDet() { cerrarModal('modal-detalle'); abrirModalMaquina(detMaqId); }
-function nuevaIntDesdeDet() { cerrarModal('modal-detalle'); abrirModalIntervencion(detMaqId); }
+function editarDesdeDet(){cerrarModal('modal-detalle');abrirModalMaquina(detMaqId);}
+function nuevaIntDesdeDet(){cerrarModal('modal-detalle');abrirModalIntervencion(detMaqId);}
 
 // ── CERRAR MODAL ──────────────────────────────────────────────────────────────
-function cerrarModal(id) {
+function cerrarModal(id){
   document.getElementById(id).classList.remove('open');
-  document.getElementById('main').style.overflow = '';
+  document.getElementById('main').style.overflow='';
 }
 
 // ── RENDER ────────────────────────────────────────────────────────────────────
-function renderMaquinas() {
-  const cont = document.getElementById('lista-maquinas');
-  if (maquinas.length === 0) {
-    cont.innerHTML = `<div class="empty"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg><p>Sin máquinas registradas.<br>Pulsa "+ Nueva" para añadir.</p></div>`;
+function renderMaquinas(){
+  const cont=document.getElementById('lista-maquinas');
+  const filtCli=document.getElementById('filtro-cliente').value;
+  const filtTipo=document.getElementById('filtro-tipo').value;
+  let lista=maquinas;
+  if(filtCli) lista=lista.filter(m=>m.clienteId===filtCli);
+  if(filtTipo) lista=lista.filter(m=>m.tipo===filtTipo);
+  if(!lista.length){
+    cont.innerHTML=`<div class="empty"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg><p>Sin máquinas. Pulsa "+ Nueva" para añadir.</p></div>`;
     return;
   }
-  const porTaller = {};
-  maquinas.forEach(m => { if (!porTaller[m.taller]) porTaller[m.taller]=[]; porTaller[m.taller].push(m); });
-  let html = '';
-  Object.entries(porTaller).forEach(([taller, items]) => {
-    html += `<div class="taller-label">${taller.replace('HVT_','')}</div>`;
-    items.forEach(m => {
-      const ints = intervenciones.filter(i => i.maqId === m.id);
-      const last = [...ints].sort((a,b)=>b.ts-a.ts)[0];
-      const tipoBadge = m.tipo==='Cabina pintura'?'badge-amber':m.tipo==='Elevador'?'badge-blue':'badge-gray';
-      html += `<div class="card" onclick="abrirDetalle('${m.id}')">
+  const porSede={};
+  lista.forEach(m=>{if(!porSede[m.sedeId])porSede[m.sedeId]=[];porSede[m.sedeId].push(m);});
+  let html='';
+  Object.entries(porSede).forEach(([sedeId,items])=>{
+    const s=sedes.find(x=>x.id===sedeId);
+    html+=`<div class="taller-label">${s?s.nombre:sedeId}</div>`;
+    items.forEach(m=>{
+      const ints=intervenciones.filter(i=>i.maqId===m.id);
+      const last=[...ints].sort((a,b)=>b.ts-a.ts)[0];
+      const tb=m.tipo==='Cabina pintura'?'b-amber':m.tipo==='Elevador'?'b-blue':m.tipo==='Compresor'?'b-green':'b-gray';
+      html+=`<div class="card" onclick="abrirDetalle('${m.id}')">
         <div class="card-top">
-          <div><div class="card-id">${m.id}</div><div class="card-meta">${m.marca||''}${m.arranque?' · '+m.arranque:''}</div></div>
-          <span class="badge ${tipoBadge}">${m.tipo}</span>
+          <div><div class="card-id">${m.id}</div><div class="card-meta">${m.marca||''}${m.modelo?' '+m.modelo:''}${m.arranque?' · '+m.arranque:''}</div></div>
+          <span class="badge ${tb}">${m.tipo}</span>
         </div>
-        <div style="font-size:12px;color:var(--text3);margin-top:6px">${ints.length} intervenciones${last?' · última '+last.fecha:''}</div>
+        <div style="font-size:12px;color:var(--text3);margin-top:6px">${ints.length} partes${last?' · último '+last.fecha:''}</div>
       </div>`;
     });
   });
-  cont.innerHTML = html;
+  cont.innerHTML=html;
 }
-function renderIntervenciones() {
-  const cont = document.getElementById('lista-intervenciones');
-  if (intervenciones.length === 0) {
-    cont.innerHTML = `<div class="empty"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg><p>Sin intervenciones registradas.</p></div>`;
+
+function renderIntervenciones(){
+  const cont=document.getElementById('lista-intervenciones');
+  if(!intervenciones.length){
+    cont.innerHTML=`<div class="empty"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg><p>Sin partes registradas.</p></div>`;
     return;
   }
-  const sorted = [...intervenciones].sort((a,b)=>b.ts-a.ts);
-  let html = '';
-  sorted.forEach(i => {
-    const m = maquinas.find(x=>x.id===i.maqId);
-    const taller = m ? m.taller.replace('HVT_','') : '';
-    const badge = i.tipo==='Correctivo'?'badge-red':i.tipo==='Preventivo'?'badge-green':i.tipo==='Inspección'?'badge-blue':'badge-gray';
-    html += `<div class="card" style="cursor:default">
+  const sorted=[...intervenciones].sort((a,b)=>b.ts-a.ts);
+  let html='';
+  sorted.forEach(i=>{
+    const m=maquinas.find(x=>x.id===i.maqId);
+    const s=m?sedes.find(x=>x.id===m.sedeId):null;
+    const bd=i.tipo==='Correctivo'?'b-red':i.tipo==='Preventivo'?'b-green':i.tipo==='Inspección'?'b-blue':'b-gray';
+    html+=`<div class="card" style="cursor:default">
       <div class="card-top">
-        <div><div class="card-id">${i.maqId}</div><div class="card-meta">${taller}${i.horas?' · '+i.horas+'h':''} · ${i.componente}</div></div>
-        <div style="text-align:right"><span class="badge ${badge}">${i.tipo}</span><div style="font-size:11px;color:var(--text3);margin-top:4px">${i.fecha}</div></div>
+        <div><div class="card-id">${i.maqId}</div><div class="card-meta">${s?s.nombre.replace('HVT ',''):''} · ${i.componente}${i.hinicio?' · '+i.hinicio:''}${i.hfin?'–'+i.hfin:''}</div></div>
+        <div style="text-align:right"><span class="badge ${bd}">${i.tipo}</span><div style="font-size:11px;color:var(--text3);margin-top:4px">${i.fecha}</div></div>
       </div>
       <div style="font-size:14px;margin-top:6px;line-height:1.4">${i.desc}</div>
       ${i.materiales?`<div style="font-size:12px;color:var(--text3);margin-top:4px">${i.materiales}</div>`:''}
+      ${i.priv?`<div class="nota-priv"><div class="nota-priv-label">Nota privada</div>${i.priv}</div>`:''}
     </div>`;
   });
-  cont.innerHTML = html;
+  cont.innerHTML=html;
 }
-function renderResumen() {
-  const nMaq = maquinas.length, nInt = intervenciones.length;
-  const nCorr = intervenciones.filter(i=>i.tipo==='Correctivo').length;
-  const nPrev = intervenciones.filter(i=>i.tipo==='Preventivo').length;
-  const hTotal = intervenciones.reduce((s,i)=>s+(parseFloat(i.horas)||0),0);
-  const recientes = [...intervenciones].sort((a,b)=>b.ts-a.ts).slice(0,5);
-  document.getElementById('resumen-content').innerHTML = `
+
+function renderResumen(){
+  const nMaq=maquinas.length,nInt=intervenciones.length;
+  const nCorr=intervenciones.filter(i=>i.tipo==='Correctivo').length;
+  const nPrev=intervenciones.filter(i=>i.tipo==='Preventivo').length;
+  const hTotal=intervenciones.reduce((s,i)=>{
+    if(i.hinicio&&i.hfin){
+      const [h1,m1]=i.hinicio.split(':').map(Number);
+      const [h2,m2]=i.hfin.split(':').map(Number);
+      return s+Math.max(0,(h2*60+m2-h1*60-m1)/60);
+    }
+    return s;
+  },0);
+  const recientes=[...intervenciones].sort((a,b)=>b.ts-a.ts).slice(0,5);
+  document.getElementById('resumen-content').innerHTML=`
   <div class="stats-grid">
     <div class="stat-card"><div class="stat-num">${nMaq}</div><div class="stat-lbl">Máquinas</div></div>
-    <div class="stat-card"><div class="stat-num">${nInt}</div><div class="stat-lbl">Intervenciones</div></div>
+    <div class="stat-card"><div class="stat-num">${nInt}</div><div class="stat-lbl">Partes</div></div>
     <div class="stat-card"><div class="stat-num" style="color:var(--red)">${nCorr}</div><div class="stat-lbl">Correctivos</div></div>
     <div class="stat-card"><div class="stat-num" style="color:var(--green)">${nPrev}</div><div class="stat-lbl">Preventivos</div></div>
   </div>
   <div class="stat-card" style="margin-bottom:16px">
     <div class="stat-num" style="color:var(--accent)">${hTotal.toFixed(1)}</div>
-    <div class="stat-lbl">Horas totales registradas</div>
+    <div class="stat-lbl">Horas registradas (con hora inicio/fin)</div>
   </div>
-  <div class="sync-row">
-    <div class="sync-dot ${navigator.onLine?'':'offline'}"></div>
-    <span>${navigator.onLine?'En línea':'Sin conexión — datos guardados localmente'}</span>
-  </div>
+  <div class="sync-row"><div class="sync-dot ${navigator.onLine?'':'off'}"></div><span>${navigator.onLine?'En línea':'Sin conexión — datos guardados localmente'}</span></div>
   <div style="margin-top:16px">
-    <div class="section-sep">Últimas intervenciones</div>
-    ${recientes.length===0?'<p style="font-size:13px;color:var(--text3)">Sin intervenciones aún.</p>':
-    recientes.map(i=>`<div class="int-item"><div class="int-meta">${i.fecha} · ${i.maqId} · ${i.componente}</div><div class="int-desc">${i.desc}</div></div>`).join('')}
+    <div class="sep">Últimas intervenciones</div>
+    ${recientes.map(i=>`<div class="ii"><div class="ii-meta">${i.fecha} · ${i.maqId} · ${i.componente}</div><div class="ii-desc">${i.desc}</div></div>`).join('')}
   </div>
-  <button class="btn-full btn-ghost" style="margin-top:16px" onclick="exportarJSON()">Exportar JSON</button>`;
+  <button class="btn btn-g" style="margin-top:16px" onclick="exportarJSON()">Exportar JSON</button>
+  <button class="btn btn-g" onclick="importarJSON()">Importar JSON</button>`;
 }
-function renderAll() { renderMaquinas(); renderIntervenciones(); }
 
-// ── EXPORTAR ──────────────────────────────────────────────────────────────────
-function exportarJSON() {
-  const data = {version:'1.0', exportado:new Date().toISOString(), maquinas, intervenciones};
-  const blob = new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href=url; a.download='sentinel_field_'+new Date().toISOString().slice(0,10)+'.json'; a.click();
+function renderAll(){renderMaquinas();renderIntervenciones();}
+
+// ── EXPORTAR / IMPORTAR ───────────────────────────────────────────────────────
+function exportarJSON(){
+  const data={version:'1.1',exportado:new Date().toISOString(),clientes,sedes,maquinas,intervenciones};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download='sentinel_field_'+new Date().toISOString().slice(0,10)+'.json';a.click();
   URL.revokeObjectURL(url);
+}
+function importarJSON(){
+  const inp=document.createElement('input');inp.type='file';inp.accept='.json';
+  inp.onchange=async e=>{
+    const f=e.target.files[0];if(!f)return;
+    const txt=await f.text();
+    try{
+      const data=JSON.parse(txt);
+      if(data.clientes)for(const c of data.clientes) await dbPut('clientes',c);
+      if(data.sedes)for(const s of data.sedes) await dbPut('sedes',s);
+      if(data.maquinas)for(const m of data.maquinas) await dbPut('maquinas',m);
+      if(data.intervenciones)for(const i of data.intervenciones) await dbPut('intervenciones',i);
+      [clientes,sedes,maquinas,intervenciones]=await Promise.all([dbAll('clientes'),dbAll('sedes'),dbAll('maquinas'),dbAll('intervenciones')]);
+      renderFiltros();renderAll();
+      alert('Datos importados correctamente.');
+    }catch(err){alert('Error al importar: '+err.message);}
+  };
+  inp.click();
 }
 
 // ── OFFLINE ───────────────────────────────────────────────────────────────────
-function updateOfflineBar() {
-  document.getElementById('offline-bar').classList.toggle('show',!navigator.onLine);
-}
-window.addEventListener('online', updateOfflineBar);
-window.addEventListener('offline', updateOfflineBar);
-updateOfflineBar();
+window.addEventListener('online',()=>document.getElementById('offline-bar').classList.remove('show'));
+window.addEventListener('offline',()=>document.getElementById('offline-bar').classList.add('show'));
+if(!navigator.onLine) document.getElementById('offline-bar').classList.add('show');
 
-if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(()=>{});
+if('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(()=>{});
 
-initDB().then(cargar);
+// ── INICIO ────────────────────────────────────────────────────────────────────
+initAuth();
 </script>
 </body>
 </html>
