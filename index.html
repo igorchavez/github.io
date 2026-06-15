@@ -4,28 +4,30 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Sentinel Field">
-<meta name="theme-color" content="#0f0f0f">
+<meta name="theme-color" content="#f0f0f0">
 <title>Sentinel Field</title>
 <style>
 :root {
-  --bg: #0f0f0f;
-  --surface: #1a1a1a;
-  --surface2: #242424;
-  --border: rgba(255,255,255,0.08);
-  --border2: rgba(255,255,255,0.15);
-  --text: #f0f0f0;
-  --text2: #888;
-  --text3: #555;
-  --accent: #e8c87a;
-  --accent-dim: rgba(232,200,122,0.12);
-  --red: #e05c5c;
-  --red-dim: rgba(224,92,92,0.12);
-  --green: #5cb85c;
-  --green-dim: rgba(92,184,92,0.12);
-  --blue: #5c9ee0;
-  --blue-dim: rgba(92,158,224,0.12);
+  --bg: #eaeaea;
+  --surface: #ffffff;
+  --surface2: #f2f2f2;
+  --border: rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.15);
+  --text: #111111;
+  --text2: #666666;
+  --text3: #aaaaaa;
+  --accent: #1a6fa8;
+  --accent-dim: rgba(26,111,168,0.10);
+  --red: #c0392b;
+  --red-dim: rgba(192,57,43,0.10);
+  --green: #27ae60;
+  --green-dim: rgba(39,174,96,0.10);
+  --blue: #1a6fa8;
+  --blue-dim: rgba(26,111,168,0.10);
+  --amber: #e67e22;
+  --amber-dim: rgba(230,126,34,0.10);
   --radius: 10px;
   --radius-sm: 6px;
   --safe-bottom: env(safe-area-inset-bottom, 0px);
@@ -34,116 +36,109 @@
 html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;font-size:15px}
 body{display:flex;flex-direction:column}
 
-/* NAV */
-.nav{display:flex;background:var(--surface);border-bottom:0.5px solid var(--border);flex-shrink:0;padding-bottom:var(--safe-bottom)}
+.nav{display:flex;background:var(--surface);border-top:0.5px solid var(--border);flex-shrink:0;padding-bottom:var(--safe-bottom);order:2}
 .nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 4px;border:none;background:none;color:var(--text3);font-size:10px;font-family:inherit;cursor:pointer;transition:color 0.15s;letter-spacing:0.02em}
 .nav-btn svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 .nav-btn.active{color:var(--accent)}
 
-/* MAIN */
-.main{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.main{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;order:1}
 .screen{display:none;padding:16px;padding-bottom:24px}
 .screen.active{display:block}
 
-/* HEADER */
 .screen-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
-.screen-title{font-size:20px;font-weight:600;letter-spacing:-0.02em}
-.btn-new{display:flex;align-items:center;gap:5px;padding:7px 13px;background:var(--accent);color:#0f0f0f;border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.screen-title{font-size:20px;font-weight:700;letter-spacing:-0.02em}
+.btn-new{display:flex;align-items:center;gap:5px;padding:7px 13px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
 .btn-new svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.5}
 
-/* CARDS */
-.card{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;cursor:pointer;transition:border-color 0.15s}
-.card:active{border-color:var(--border2)}
+.card{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;cursor:pointer;transition:box-shadow 0.15s}
+.card:active{box-shadow:0 0 0 2px var(--accent)}
 .card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px}
-.card-id{font-size:15px;font-weight:600;letter-spacing:-0.01em}
+.card-id{font-size:15px;font-weight:700;letter-spacing:-0.01em}
 .card-meta{font-size:12px;color:var(--text2);margin-top:2px}
-.badge{display:inline-flex;align-items:center;padding:3px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.02em}
-.badge-yellow{background:var(--accent-dim);color:var(--accent)}
+.badge{display:inline-flex;align-items:center;padding:3px 8px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:0.02em}
+.badge-blue{background:var(--blue-dim);color:var(--blue)}
 .badge-red{background:var(--red-dim);color:var(--red)}
 .badge-green{background:var(--green-dim);color:var(--green)}
-.badge-blue{background:var(--blue-dim);color:var(--blue)}
+.badge-amber{background:var(--amber-dim);color:var(--amber)}
 .badge-gray{background:var(--surface2);color:var(--text2)}
 
-/* TALLER LABEL */
-.taller-label{font-size:11px;font-weight:600;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin:16px 0 8px;padding-bottom:4px;border-bottom:0.5px solid var(--border)}
+.taller-label{font-size:11px;font-weight:700;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin:16px 0 8px;padding-bottom:4px;border-bottom:0.5px solid var(--border)}
 .taller-label:first-child{margin-top:0}
 
-/* FORM */
-.form-label{display:block;font-size:11px;font-weight:500;color:var(--text2);margin-bottom:5px;margin-top:14px;letter-spacing:0.04em;text-transform:uppercase}
+.form-label{display:block;font-size:11px;font-weight:600;color:var(--text2);margin-bottom:5px;margin-top:14px;letter-spacing:0.04em;text-transform:uppercase}
 .form-label:first-child{margin-top:0}
 .form-input{width:100%;background:var(--surface2);border:0.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;color:var(--text);font-size:15px;font-family:inherit;outline:none;-webkit-appearance:none;appearance:none}
-.form-input:focus{border-color:var(--border2)}
+.form-input:focus{border-color:var(--accent)}
 select.form-input{cursor:pointer}
-select.form-input option{background:var(--surface2)}
 textarea.form-input{resize:vertical;min-height:72px;line-height:1.5}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .subsection{border-left:2px solid var(--accent-dim);padding:10px 0 4px 14px;margin:10px 0}
-.subsection-title{font-size:12px;font-weight:600;color:var(--accent);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:4px}
+.subsection-title{font-size:12px;font-weight:700;color:var(--accent);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:4px}
 
-/* CHIPS */
 .chip-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
-.chip{padding:6px 12px;border-radius:20px;border:0.5px solid var(--border2);font-size:13px;background:none;color:var(--text2);cursor:pointer;font-family:inherit;transition:all 0.15s}
-.chip.on{background:var(--accent);color:#0f0f0f;border-color:var(--accent);font-weight:600}
+.chip{padding:6px 12px;border-radius:20px;border:0.5px solid var(--border2);font-size:13px;background:var(--surface);color:var(--text2);cursor:pointer;font-family:inherit;transition:all 0.15s}
+.chip.on{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600}
 
-/* MODAL */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:50;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:50;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .modal-overlay.open{display:block}
-.modal{background:var(--surface);border-radius:var(--radius) var(--radius) 0 0;padding:20px 16px;padding-bottom:calc(24px + var(--safe-bottom));margin-top:60px;min-height:calc(100vh - 60px)}
+.modal{background:var(--bg);border-radius:var(--radius) var(--radius) 0 0;padding:20px 16px;padding-bottom:calc(24px + var(--safe-bottom));margin-top:40px;min-height:calc(100vh - 40px)}
 .modal-handle{width:36px;height:4px;background:var(--border2);border-radius:2px;margin:0 auto 16px}
 .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
-.modal-title{font-size:18px;font-weight:600;letter-spacing:-0.02em}
+.modal-title{font-size:18px;font-weight:700;letter-spacing:-0.02em}
 .modal-close{width:30px;height:30px;display:flex;align-items:center;justify-content:center;background:var(--surface2);border:none;border-radius:50%;color:var(--text2);cursor:pointer}
 .modal-close svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
 
-/* BUTTONS */
-.btn-full{width:100%;padding:13px;border-radius:var(--radius);font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:12px;border:none;transition:opacity 0.15s}
-.btn-full:active{opacity:0.8}
-.btn-primary{background:var(--accent);color:#0f0f0f}
-.btn-ghost{background:var(--surface2);color:var(--text);border:0.5px solid var(--border)}
-.btn-danger{background:var(--red-dim);color:var(--red);border:0.5px solid var(--red-dim)}
+.btn-full{width:100%;padding:13px;border-radius:var(--radius);font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:10px;border:none;transition:opacity 0.15s}
+.btn-full:active{opacity:0.75}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-ghost{background:var(--surface);color:var(--text);border:0.5px solid var(--border2)}
+.btn-danger{background:var(--red-dim);color:var(--red);border:0.5px solid rgba(192,57,43,0.2)}
 
-/* DETAIL */
 .detail-row{display:flex;justify-content:space-between;align-items:baseline;padding:9px 0;border-bottom:0.5px solid var(--border)}
 .detail-row:last-child{border-bottom:none}
 .detail-key{font-size:13px;color:var(--text2);flex-shrink:0;margin-right:12px}
 .detail-val{font-size:13px;text-align:right;word-break:break-all}
-.section-sep{font-size:11px;font-weight:600;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin:16px 0 8px;padding-bottom:6px;border-bottom:0.5px solid var(--border)}
+.section-sep{font-size:11px;font-weight:700;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin:16px 0 8px;padding-bottom:6px;border-bottom:0.5px solid var(--border)}
 
-/* RESUMEN */
-.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
 .stat-card{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--radius);padding:14px}
 .stat-num{font-size:28px;font-weight:700;letter-spacing:-0.03em;line-height:1}
 .stat-lbl{font-size:11px;color:var(--text2);margin-top:4px;letter-spacing:0.03em}
 
-/* INTERVENCION ITEM */
 .int-item{padding:10px 0;border-bottom:0.5px solid var(--border)}
 .int-item:last-child{border-bottom:none}
 .int-meta{font-size:11px;color:var(--text2);margin-bottom:3px}
 .int-desc{font-size:14px;line-height:1.4}
 .int-mat{font-size:12px;color:var(--text3);margin-top:3px}
 
-/* EMPTY */
 .empty{text-align:center;padding:48px 16px;color:var(--text3)}
 .empty svg{width:40px;height:40px;stroke:currentColor;fill:none;stroke-width:1;margin-bottom:12px;opacity:0.4}
 .empty p{font-size:14px;line-height:1.5}
 
-/* OFFLINE BANNER */
-.offline-bar{display:none;background:var(--red-dim);border-bottom:0.5px solid var(--red);padding:6px 16px;font-size:12px;color:var(--red);text-align:center;flex-shrink:0}
+.offline-bar{display:none;background:var(--red-dim);border-bottom:0.5px solid var(--red);padding:6px 16px;font-size:12px;color:var(--red);text-align:center;flex-shrink:0;order:0}
 .offline-bar.show{display:block}
 
-/* SYNC STATUS */
 .sync-row{display:flex;align-items:center;gap:8px;padding:10px 0;font-size:13px;color:var(--text2)}
 .sync-dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0}
 .sync-dot.offline{background:var(--red)}
-.sync-dot.pending{background:var(--accent)}
+
+/* FOTOS */
+.foto-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px}
+.foto-thumb{width:100%;aspect-ratio:1;object-fit:cover;border-radius:var(--radius-sm);border:0.5px solid var(--border);background:var(--surface2);cursor:pointer}
+.foto-add{width:100%;aspect-ratio:1;border-radius:var(--radius-sm);border:1px dashed var(--border2);background:var(--surface2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;color:var(--text3);font-size:11px}
+.foto-add svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.5}
+.foto-viewer{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:100;flex-direction:column;align-items:center;justify-content:center}
+.foto-viewer.open{display:flex}
+.foto-viewer img{max-width:100%;max-height:85vh;object-fit:contain;border-radius:4px}
+.foto-viewer-close{position:absolute;top:16px;right:16px;width:36px;height:36px;background:rgba(255,255,255,0.15);border:none;border-radius:50%;color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.foto-viewer-del{position:absolute;bottom:32px;background:var(--red);color:#fff;border:none;padding:10px 24px;border-radius:var(--radius);font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
 </style>
 </head>
 <body>
 
 <div class="offline-bar" id="offline-bar">Sin conexión — datos guardados localmente</div>
-
 <div class="main" id="main">
-  <!-- MÁQUINAS -->
+
   <div class="screen active" id="screen-maquinas">
     <div class="screen-header">
       <span class="screen-title">Máquinas</span>
@@ -155,27 +150,23 @@ textarea.form-input{resize:vertical;min-height:72px;line-height:1.5}
     <div id="lista-maquinas"></div>
   </div>
 
-  <!-- INTERVENCIONES -->
   <div class="screen" id="screen-intervenciones">
     <div class="screen-header">
-      <span class="screen-title">Intervenciones</span>
+      <span class="screen-title">Partes</span>
       <button class="btn-new" onclick="abrirModalIntervencion()">
         <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        Nueva
+        Nuevo
       </button>
     </div>
     <div id="lista-intervenciones"></div>
   </div>
 
-  <!-- RESUMEN -->
   <div class="screen" id="screen-resumen">
-    <div class="screen-header">
-      <span class="screen-title">Resumen</span>
-    </div>
+    <div class="screen-header"><span class="screen-title">Resumen</span></div>
     <div id="resumen-content"></div>
   </div>
-</div>
 
+</div>
 <nav class="nav">
   <button class="nav-btn active" onclick="showTab('maquinas',this)">
     <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
@@ -201,14 +192,12 @@ textarea.form-input{resize:vertical;min-height:72px;line-height:1.5}
       <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
   </div>
-
   <label class="form-label">Taller</label>
   <select class="form-input" id="m-taller">
     <option value="">— seleccionar —</option>
     <option>HVT_Illescas</option>
     <option>HVT_Olias</option>
   </select>
-
   <label class="form-label">Tipo de máquina</label>
   <div class="chip-row" id="chips-tipo">
     <button class="chip on" onclick="selChip(this,'tipo','Cabina pintura')">Cabina pintura</button>
@@ -217,25 +206,14 @@ textarea.form-input{resize:vertical;min-height:72px;line-height:1.5}
     <button class="chip" onclick="selChip(this,'tipo','Soldadura')">Soldadura</button>
     <button class="chip" onclick="selChip(this,'tipo','Otro')">Otro</button>
   </div>
-
   <label class="form-label">ID / Código</label>
   <input class="form-input" id="m-codigo" type="text" placeholder="ej. CAB-ILL-H1" autocapitalize="characters">
-
   <label class="form-label">Marca / Modelo</label>
   <input class="form-input" id="m-marca" type="text" placeholder="ej. Hildebrand">
-
   <div class="row2">
-    <div>
-      <label class="form-label">Nº serie</label>
-      <input class="form-input" id="m-serie" type="text">
-    </div>
-    <div>
-      <label class="form-label">Año</label>
-      <input class="form-input" id="m-anio" type="text" inputmode="numeric">
-    </div>
+    <div><label class="form-label">Nº serie</label><input class="form-input" id="m-serie" type="text"></div>
+    <div><label class="form-label">Año</label><input class="form-input" id="m-anio" type="text" inputmode="numeric"></div>
   </div>
-
-  <!-- CAMPOS CABINA -->
   <div id="extra-cabina">
     <label class="form-label">Tipo arranque</label>
     <div class="chip-row" id="chips-arranque">
@@ -243,33 +221,25 @@ textarea.form-input{resize:vertical;min-height:72px;line-height:1.5}
       <button class="chip" onclick="selChip(this,'arranque','Variador')">Variador</button>
       <button class="chip" onclick="selChip(this,'arranque','Directo')">Directo</button>
     </div>
-
     <div class="subsection">
       <div class="subsection-title">Motor impulsión</div>
-      <label class="form-label">Marca / modelo</label>
-      <input class="form-input" id="m-imp-marca" type="text" placeholder="ej. ABB M2AA 132">
+      <label class="form-label">Marca / modelo</label><input class="form-input" id="m-imp-marca" type="text" placeholder="ej. ABB M2AA 132">
       <div class="row2">
-        <div><label class="form-label">Potencia (kW)</label><input class="form-input" id="m-imp-kw" type="text" inputmode="decimal" placeholder="9,2"></div>
-        <div><label class="form-label">rpm</label><input class="form-input" id="m-imp-rpm" type="text" inputmode="numeric" placeholder="1450"></div>
+        <div><label class="form-label">Potencia (kW)</label><input class="form-input" id="m-imp-kw" type="text" inputmode="decimal"></div>
+        <div><label class="form-label">rpm</label><input class="form-input" id="m-imp-rpm" type="text" inputmode="numeric"></div>
       </div>
       <div class="row2">
         <div><label class="form-label">Corriente (A)</label><input class="form-input" id="m-imp-amp" type="text" inputmode="decimal"></div>
-        <div><label class="form-label">Cos φ</label><input class="form-input" id="m-imp-cos" type="text" inputmode="decimal" placeholder="0,85"></div>
+        <div><label class="form-label">Cos φ</label><input class="form-input" id="m-imp-cos" type="text" inputmode="decimal"></div>
       </div>
-      <label class="form-label">Rodamiento frontal</label>
-      <input class="form-input" id="m-imp-rdf" type="text" placeholder="ej. 6208-2Z/C3" autocapitalize="characters">
-      <label class="form-label">Rodamiento trasero</label>
-      <input class="form-input" id="m-imp-rdt" type="text" placeholder="ej. 6208-2Z/C3" autocapitalize="characters">
-      <label class="form-label">Referencia motor</label>
-      <input class="form-input" id="m-imp-ref" type="text" placeholder="ej. 3GAA132004-PDB">
-      <label class="form-label">Nº serie motor</label>
-      <input class="form-input" id="m-imp-ns" type="text">
+      <label class="form-label">Rodamiento frontal</label><input class="form-input" id="m-imp-rdf" type="text" placeholder="ej. 6208-2Z/C3" autocapitalize="characters">
+      <label class="form-label">Rodamiento trasero</label><input class="form-input" id="m-imp-rdt" type="text" autocapitalize="characters">
+      <label class="form-label">Referencia motor</label><input class="form-input" id="m-imp-ref" type="text">
+      <label class="form-label">Nº serie motor</label><input class="form-input" id="m-imp-ns" type="text">
     </div>
-
     <div class="subsection">
       <div class="subsection-title">Motor extracción</div>
-      <label class="form-label">Marca / modelo</label>
-      <input class="form-input" id="m-ext-marca" type="text">
+      <label class="form-label">Marca / modelo</label><input class="form-input" id="m-ext-marca" type="text">
       <div class="row2">
         <div><label class="form-label">Potencia (kW)</label><input class="form-input" id="m-ext-kw" type="text" inputmode="decimal"></div>
         <div><label class="form-label">rpm</label><input class="form-input" id="m-ext-rpm" type="text" inputmode="numeric"></div>
@@ -278,34 +248,27 @@ textarea.form-input{resize:vertical;min-height:72px;line-height:1.5}
         <div><label class="form-label">Corriente (A)</label><input class="form-input" id="m-ext-amp" type="text" inputmode="decimal"></div>
         <div><label class="form-label">Cos φ</label><input class="form-input" id="m-ext-cos" type="text" inputmode="decimal"></div>
       </div>
-      <label class="form-label">Rodamiento frontal</label>
-      <input class="form-input" id="m-ext-rdf" type="text" autocapitalize="characters">
-      <label class="form-label">Rodamiento trasero</label>
-      <input class="form-input" id="m-ext-rdt" type="text" autocapitalize="characters">
-      <label class="form-label">Referencia motor</label>
-      <input class="form-input" id="m-ext-ref" type="text">
-      <label class="form-label">Nº serie motor</label>
-      <input class="form-input" id="m-ext-ns" type="text">
+      <label class="form-label">Rodamiento frontal</label><input class="form-input" id="m-ext-rdf" type="text" autocapitalize="characters">
+      <label class="form-label">Rodamiento trasero</label><input class="form-input" id="m-ext-rdt" type="text" autocapitalize="characters">
+      <label class="form-label">Referencia motor</label><input class="form-input" id="m-ext-ref" type="text">
+      <label class="form-label">Nº serie motor</label><input class="form-input" id="m-ext-ns" type="text">
     </div>
-
     <div class="subsection">
       <div class="subsection-title">Quemador</div>
-      <label class="form-label">Marca / modelo</label>
-      <input class="form-input" id="m-que-marca" type="text" placeholder="ej. Joanes Finterm AZ14">
-      <label class="form-label">Centralita</label>
-      <input class="form-input" id="m-que-central" type="text" placeholder="ej. LOA24">
-      <label class="form-label">Bomba</label>
-      <input class="form-input" id="m-que-bomba" type="text" placeholder="ej. Suntec">
+      <label class="form-label">Marca / modelo</label><input class="form-input" id="m-que-marca" type="text" placeholder="ej. Joanes Finterm AZ14">
+      <label class="form-label">Centralita</label><input class="form-input" id="m-que-central" type="text" placeholder="ej. LOA24">
+      <label class="form-label">Bomba</label><input class="form-input" id="m-que-bomba" type="text" placeholder="ej. Suntec">
       <div class="row2">
         <div><label class="form-label">Chicle actual</label><input class="form-input" id="m-que-chicle" type="text" placeholder="ej. 3,0×60°"></div>
         <div><label class="form-label">Aire</label><input class="form-input" id="m-que-aire" type="text" placeholder="ej. 2,0"></div>
       </div>
     </div>
   </div>
-
+  <label class="form-label">Fotos de la máquina</label>
+  <div class="foto-grid" id="fotos-maquina-grid"></div>
+  <input type="file" id="foto-maquina-input" accept="image/*" capture="environment" style="display:none" onchange="añadirFotoMaquina(event)">
   <label class="form-label">Observaciones</label>
   <textarea class="form-input" id="m-obs" placeholder="notas adicionales..."></textarea>
-
   <button class="btn-full btn-primary" onclick="guardarMaquina()">Guardar</button>
   <button class="btn-full btn-danger" id="btn-elim-maq" style="display:none" onclick="eliminarMaquina()">Eliminar máquina</button>
   <button class="btn-full btn-ghost" onclick="cerrarModal('modal-maquina')">Cancelar</button>
@@ -322,15 +285,12 @@ textarea.form-input{resize:vertical;min-height:72px;line-height:1.5}
       <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
   </div>
-
   <label class="form-label">Fecha</label>
   <input class="form-input" id="i-fecha" type="date">
-
   <label class="form-label">Máquina</label>
   <select class="form-input" id="i-maquina">
     <option value="">— seleccionar —</option>
   </select>
-
   <label class="form-label">Tipo</label>
   <div class="chip-row" id="chips-int-tipo">
     <button class="chip on" onclick="selChip(this,'int-tipo','Correctivo')">Correctivo</button>
@@ -338,7 +298,6 @@ textarea.form-input{resize:vertical;min-height:72px;line-height:1.5}
     <button class="chip" onclick="selChip(this,'int-tipo','Revisión')">Revisión</button>
     <button class="chip" onclick="selChip(this,'int-tipo','Inspección')">Inspección</button>
   </div>
-
   <label class="form-label">Componente</label>
   <div class="chip-row" id="chips-comp">
     <button class="chip on" onclick="selChip(this,'comp','Motor/Turbina')">Motor/Turbina</button>
@@ -349,25 +308,23 @@ textarea.form-input{resize:vertical;min-height:72px;line-height:1.5}
     <button class="chip" onclick="selChip(this,'comp','Neumático')">Neumático</button>
     <button class="chip" onclick="selChip(this,'comp','Otro')">Otro</button>
   </div>
-
   <label class="form-label">Tiempo (horas)</label>
   <input class="form-input" id="i-horas" type="number" min="0" step="0.5" placeholder="ej. 2" inputmode="decimal">
-
   <label class="form-label">Descripción del trabajo</label>
   <textarea class="form-input" id="i-desc" placeholder="qué se hizo, qué se encontró..."></textarea>
-
   <label class="form-label">Materiales / referencias</label>
-  <textarea class="form-input" id="i-mat" placeholder="ej. Rodamientos 6208-2Z/C3 ×2, chicle 3,0×60°..." style="min-height:60px"></textarea>
-
+  <textarea class="form-input" id="i-mat" placeholder="ej. Rodamientos 6208-2Z/C3 ×2..." style="min-height:60px"></textarea>
+  <label class="form-label">Fotos de la intervención</label>
+  <div class="foto-grid" id="fotos-intervencion-grid"></div>
+  <input type="file" id="foto-intervencion-input" accept="image/*" capture="environment" style="display:none" onchange="añadirFotoIntervencion(event)">
   <label class="form-label">Observaciones / síntomas</label>
   <textarea class="form-input" id="i-obs" placeholder="síntomas previos, recomendaciones..." style="min-height:60px"></textarea>
-
   <button class="btn-full btn-primary" onclick="guardarIntervencion()">Guardar intervención</button>
   <button class="btn-full btn-ghost" onclick="cerrarModal('modal-intervencion')">Cancelar</button>
 </div>
 </div>
 
-<!-- MODAL DETALLE MÁQUINA -->
+<!-- MODAL DETALLE -->
 <div class="modal-overlay" id="modal-detalle">
 <div class="modal">
   <div class="modal-handle"></div>
@@ -384,65 +341,176 @@ textarea.form-input{resize:vertical;min-height:72px;line-height:1.5}
 </div>
 </div>
 
-<script>
-// ─── STATE ───────────────────────────────────────────────────────────────────
-let DB;
-let maquinas = [];
-let intervenciones = [];
-let chips = { tipo:'Cabina pintura', arranque:'D-Y', 'int-tipo':'Correctivo', comp:'Motor/Turbina' };
-let editMaqId = null;
-let detMaqId = null;
+<!-- VISOR DE FOTO -->
+<div class="foto-viewer" id="foto-viewer">
+  <button class="foto-viewer-close" onclick="cerrarVisor()">✕</button>
+  <img id="foto-viewer-img" src="" alt="foto">
+  <button class="foto-viewer-del" onclick="eliminarFotoActual()">Eliminar foto</button>
+</div>
 
-// ─── INDEXEDDB ────────────────────────────────────────────────────────────────
+<script>
+let DB;
+let maquinas = [], intervenciones = [];
+let chips = { tipo:'Cabina pintura', arranque:'D-Y', 'int-tipo':'Correctivo', comp:'Motor/Turbina' };
+let editMaqId = null, detMaqId = null;
+let fotosTemp = { maquina:[], intervencion:[] };
+let visorCtx = null;
+
+// ── IndexedDB ────────────────────────────────────────────────────────────────
 function initDB() {
-  return new Promise((res, rej) => {
-    const req = indexedDB.open('SentinelField', 2);
+  return new Promise((res,rej) => {
+    const req = indexedDB.open('SentinelField', 3);
     req.onupgradeneeded = e => {
       const db = e.target.result;
       if (!db.objectStoreNames.contains('maquinas'))
-        db.createObjectStore('maquinas', { keyPath: 'id' });
+        db.createObjectStore('maquinas', {keyPath:'id'});
       if (!db.objectStoreNames.contains('intervenciones'))
-        db.createObjectStore('intervenciones', { keyPath: 'ts' });
+        db.createObjectStore('intervenciones', {keyPath:'ts'});
+      if (!db.objectStoreNames.contains('fotos'))
+        db.createObjectStore('fotos', {keyPath:'id', autoIncrement:true});
     };
     req.onsuccess = e => { DB = e.target.result; res(); };
     req.onerror = () => rej(req.error);
   });
 }
-
 function dbGetAll(store) {
-  return new Promise((res, rej) => {
-    const tx = DB.transaction(store, 'readonly');
-    const req = tx.objectStore(store).getAll();
+  return new Promise((res,rej) => {
+    const req = DB.transaction(store,'readonly').objectStore(store).getAll();
     req.onsuccess = () => res(req.result);
     req.onerror = () => rej(req.error);
   });
 }
-
 function dbPut(store, obj) {
-  return new Promise((res, rej) => {
-    const tx = DB.transaction(store, 'readwrite');
-    const req = tx.objectStore(store).put(obj);
-    req.onsuccess = () => res();
+  return new Promise((res,rej) => {
+    const req = DB.transaction(store,'readwrite').objectStore(store).put(obj);
+    req.onsuccess = () => res(req.result);
     req.onerror = () => rej(req.error);
   });
 }
-
 function dbDelete(store, key) {
-  return new Promise((res, rej) => {
-    const tx = DB.transaction(store, 'readwrite');
-    const req = tx.objectStore(store).delete(key);
+  return new Promise((res,rej) => {
+    const req = DB.transaction(store,'readwrite').objectStore(store).delete(key);
     req.onsuccess = () => res();
     req.onerror = () => rej(req.error);
   });
 }
-
+function dbGetWhere(store, field, val) {
+  return new Promise((res,rej) => {
+    const req = DB.transaction(store,'readonly').objectStore(store).getAll();
+    req.onsuccess = () => res(req.result.filter(r => r[field] === val));
+    req.onerror = () => rej(req.error);
+  });
+}
 async function cargar() {
   maquinas = await dbGetAll('maquinas');
   intervenciones = await dbGetAll('intervenciones');
   renderAll();
 }
 
-// ─── TABS ─────────────────────────────────────────────────────────────────────
+// ── COMPRESIÓN DE FOTOS ───────────────────────────────────────────────────────
+function comprimirImagen(file, maxPx=1200, calidad=0.78) {
+  return new Promise(res => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = new Image();
+      img.onload = () => {
+        let w = img.width, h = img.height;
+        if (w > maxPx || h > maxPx) {
+          if (w > h) { h = Math.round(h * maxPx/w); w = maxPx; }
+          else { w = Math.round(w * maxPx/h); h = maxPx; }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        res(canvas.toDataURL('image/jpeg', calidad));
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+// ── FOTOS TEMPORALES (durante edición) ───────────────────────────────────────
+async function añadirFotoMaquina(e) {
+  const file = e.target.files[0]; if (!file) return;
+  const b64 = await comprimirImagen(file);
+  fotosTemp.maquina.push(b64);
+  renderFotosTemp('maquinas', 'fotos-maquina-grid', 'foto-maquina-input');
+  e.target.value = '';
+}
+async function añadirFotoIntervencion(e) {
+  const file = e.target.files[0]; if (!file) return;
+  const b64 = await comprimirImagen(file);
+  fotosTemp.intervencion.push(b64);
+  renderFotosTemp('intervenciones', 'fotos-intervencion-grid', 'foto-intervencion-input');
+  e.target.value = '';
+}
+function renderFotosTemp(ctx, gridId, inputId) {
+  const arr = ctx === 'maquinas' ? fotosTemp.maquina : fotosTemp.intervencion;
+  const grid = document.getElementById(gridId);
+  let html = arr.map((b64,i) =>
+    `<img class="foto-thumb" src="${b64}" onclick="abrirVisor({tipo:'temp',ctx:'${ctx}',idx:${i}})">`
+  ).join('');
+  html += `<div class="foto-add" onclick="document.getElementById('${inputId}').click()">
+    <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+    Foto
+  </div>`;
+  grid.innerHTML = html;
+}
+
+// ── VISOR DE FOTO ─────────────────────────────────────────────────────────────
+function abrirVisor(ctx) {
+  visorCtx = ctx;
+  let src = '';
+  if (ctx.tipo === 'temp') {
+    src = ctx.ctx === 'maquinas' ? fotosTemp.maquina[ctx.idx] : fotosTemp.intervencion[ctx.idx];
+  } else {
+    src = ctx.src;
+  }
+  document.getElementById('foto-viewer-img').src = src;
+  document.getElementById('foto-viewer').classList.add('open');
+}
+function cerrarVisor() {
+  document.getElementById('foto-viewer').classList.remove('open');
+  visorCtx = null;
+}
+async function eliminarFotoActual() {
+  if (!visorCtx) return;
+  if (visorCtx.tipo === 'temp') {
+    const arr = visorCtx.ctx === 'maquinas' ? fotosTemp.maquina : fotosTemp.intervencion;
+    arr.splice(visorCtx.idx, 1);
+    const gridId = visorCtx.ctx === 'maquinas' ? 'fotos-maquina-grid' : 'fotos-intervencion-grid';
+    const inputId = visorCtx.ctx === 'maquinas' ? 'foto-maquina-input' : 'foto-intervencion-input';
+    renderFotosTemp(visorCtx.ctx, gridId, inputId);
+  } else if (visorCtx.tipo === 'db') {
+    await dbDelete('fotos', visorCtx.id);
+    if (visorCtx.ctx === 'maquina') await renderFotosMaquinaDetalle(visorCtx.refId);
+    else await renderFotosIntervencionDetalle(visorCtx.refId);
+  }
+  cerrarVisor();
+}
+
+// ── FOTOS EN DETALLE (cargadas de DB) ────────────────────────────────────────
+async function renderFotosMaquinaDetalle(maqId) {
+  const fotos = await dbGetWhere('fotos','maqId', maqId);
+  const cont = document.getElementById('fotos-det-maq');
+  if (!cont) return;
+  if (fotos.length === 0) { cont.innerHTML = '<p style="font-size:13px;color:var(--text3)">Sin fotos.</p>'; return; }
+  cont.innerHTML = `<div class="foto-grid">${fotos.map(f =>
+    `<img class="foto-thumb" src="${f.data}" onclick="abrirVisor({tipo:'db',ctx:'maquina',refId:'${maqId}',id:${f.id},src:'${f.data}'})">`
+  ).join('')}</div>`;
+}
+async function renderFotosIntervencionDetalle(ts) {
+  const fotos = await dbGetWhere('fotos','intTs', ts);
+  const cont = document.getElementById('fotos-det-int-' + ts);
+  if (!cont) return;
+  if (fotos.length === 0) { cont.innerHTML = ''; return; }
+  cont.innerHTML = `<div class="foto-grid" style="margin-top:6px">${fotos.map(f =>
+    `<img class="foto-thumb" src="${f.data}" onclick="abrirVisor({tipo:'db',ctx:'intervencion',refId:${ts},id:${f.id},src:'${f.data}'})">`
+  ).join('')}</div>`;
+}
+
+// ── TABS ──────────────────────────────────────────────────────────────────────
 function showTab(tab, btn) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -451,96 +519,73 @@ function showTab(tab, btn) {
   if (tab === 'resumen') renderResumen();
 }
 
-// ─── CHIPS ────────────────────────────────────────────────────────────────────
+// ── CHIPS ─────────────────────────────────────────────────────────────────────
 function selChip(btn, key, val) {
   chips[key] = val;
   btn.closest('.chip-row').querySelectorAll('.chip').forEach(c => c.classList.remove('on'));
   btn.classList.add('on');
   if (key === 'tipo') toggleExtraCabina();
 }
-
-function setChip(key, val) {
-  chips[key] = val;
-  const row = document.getElementById('chips-' + key.replace('-','_')) ||
-              document.getElementById('chips-' + key);
-  if (!row) return;
-  row.querySelectorAll('.chip').forEach(c => {
-    c.classList.toggle('on', c.textContent.trim() === val);
-  });
-}
-
 function toggleExtraCabina() {
-  document.getElementById('extra-cabina').style.display =
-    chips.tipo === 'Cabina pintura' ? 'block' : 'none';
+  document.getElementById('extra-cabina').style.display = chips.tipo === 'Cabina pintura' ? 'block' : 'none';
 }
 
-// ─── MODAL MÁQUINA ────────────────────────────────────────────────────────────
+// ── MODAL MÁQUINA ─────────────────────────────────────────────────────────────
 function abrirModalMaquina(id) {
   editMaqId = id || null;
   const m = id ? maquinas.find(x => x.id === id) : null;
   document.getElementById('modal-maq-titulo').textContent = m ? 'Editar máquina' : 'Nueva máquina';
   document.getElementById('btn-elim-maq').style.display = m ? 'block' : 'none';
-
   const campos = ['taller','codigo','marca','serie','anio','obs',
     'imp-marca','imp-kw','imp-rpm','imp-amp','imp-cos','imp-rdf','imp-rdt','imp-ref','imp-ns',
     'ext-marca','ext-kw','ext-rpm','ext-amp','ext-cos','ext-rdf','ext-rdt','ext-ref','ext-ns',
     'que-marca','que-central','que-bomba','que-chicle','que-aire'];
   campos.forEach(f => {
-    const el = document.getElementById('m-' + f);
-    if (!el) return;
-    el.value = m ? (getNestedVal(m, f) || '') : '';
+    const el = document.getElementById('m-' + f); if (!el) return;
+    el.value = m ? (getNestedVal(m,f) || '') : '';
   });
-
   const tipo = m ? m.tipo : 'Cabina pintura';
   chips.tipo = tipo;
   document.getElementById('chips-tipo').querySelectorAll('.chip').forEach(c =>
     c.classList.toggle('on', c.textContent.trim() === tipo));
   toggleExtraCabina();
-
-  const arr = m ? (m.arranque || 'D-Y') : 'D-Y';
+  const arr = m ? (m.arranque||'D-Y') : 'D-Y';
   chips.arranque = arr;
   document.getElementById('chips-arranque').querySelectorAll('.chip').forEach(c =>
     c.classList.toggle('on', c.textContent.trim() === arr));
-
+  fotosTemp.maquina = [];
+  renderFotosTemp('maquinas','fotos-maquina-grid','foto-maquina-input');
   document.getElementById('modal-maquina').classList.add('open');
   document.getElementById('main').style.overflow = 'hidden';
 }
-
-function getNestedVal(m, f) {
+function getNestedVal(m,f) {
   if (f.startsWith('imp-')) return m.motImp ? m.motImp[f.slice(4)] : '';
   if (f.startsWith('ext-')) return m.motExt ? m.motExt[f.slice(4)] : '';
   if (f.startsWith('que-')) return m.quemador ? m.quemador[f.slice(4)] : '';
   return m[f];
 }
-
-function v(id) { return (document.getElementById(id)?.value || '').trim(); }
+function v(id) { return (document.getElementById(id)?.value||'').trim(); }
 
 async function guardarMaquina() {
-  const taller = v('m-taller');
-  const codigo = v('m-codigo');
+  const taller = v('m-taller'), codigo = v('m-codigo');
   if (!taller || !codigo) { alert('Taller y código son obligatorios'); return; }
-
   const maq = {
-    id: codigo,
-    taller, tipo: chips.tipo,
-    marca: v('m-marca'), serie: v('m-serie'), anio: v('m-anio'),
-    obs: v('m-obs'),
-    fechaAlta: new Date().toISOString().slice(0, 10)
+    id: codigo, taller, tipo: chips.tipo,
+    marca: v('m-marca'), serie: v('m-serie'), anio: v('m-anio'), obs: v('m-obs'),
+    fechaAlta: new Date().toISOString().slice(0,10)
   };
-
   if (chips.tipo === 'Cabina pintura') {
     maq.arranque = chips.arranque;
-    maq.motImp = { marca:v('m-imp-marca'), kw:v('m-imp-kw'), rpm:v('m-imp-rpm'), amp:v('m-imp-amp'), cos:v('m-imp-cos'), rdf:v('m-imp-rdf'), rdt:v('m-imp-rdt'), ref:v('m-imp-ref'), ns:v('m-imp-ns') };
-    maq.motExt = { marca:v('m-ext-marca'), kw:v('m-ext-kw'), rpm:v('m-ext-rpm'), amp:v('m-ext-amp'), cos:v('m-ext-cos'), rdf:v('m-ext-rdf'), rdt:v('m-ext-rdt'), ref:v('m-ext-ref'), ns:v('m-ext-ns') };
-    maq.quemador = { marca:v('m-que-marca'), central:v('m-que-central'), bomba:v('m-que-bomba'), chicle:v('m-que-chicle'), aire:v('m-que-aire') };
+    maq.motImp = {marca:v('m-imp-marca'),kw:v('m-imp-kw'),rpm:v('m-imp-rpm'),amp:v('m-imp-amp'),cos:v('m-imp-cos'),rdf:v('m-imp-rdf'),rdt:v('m-imp-rdt'),ref:v('m-imp-ref'),ns:v('m-imp-ns')};
+    maq.motExt = {marca:v('m-ext-marca'),kw:v('m-ext-kw'),rpm:v('m-ext-rpm'),amp:v('m-ext-amp'),cos:v('m-ext-cos'),rdf:v('m-ext-rdf'),rdt:v('m-ext-rdt'),ref:v('m-ext-ref'),ns:v('m-ext-ns')};
+    maq.quemador = {marca:v('m-que-marca'),central:v('m-que-central'),bomba:v('m-que-bomba'),chicle:v('m-que-chicle'),aire:v('m-que-aire')};
   }
-
   await dbPut('maquinas', maq);
+  for (const b64 of fotosTemp.maquina) await dbPut('fotos', {maqId: codigo, data: b64, fecha: new Date().toISOString()});
   maquinas = await dbGetAll('maquinas');
   cerrarModal('modal-maquina');
   renderMaquinas();
 }
-
 async function eliminarMaquina() {
   if (!confirm('¿Eliminar ' + editMaqId + '?')) return;
   await dbDelete('maquinas', editMaqId);
@@ -549,179 +594,147 @@ async function eliminarMaquina() {
   renderMaquinas();
 }
 
-// ─── MODAL INTERVENCIÓN ───────────────────────────────────────────────────────
+// ── MODAL INTERVENCIÓN ────────────────────────────────────────────────────────
 function abrirModalIntervencion(maqId) {
-  document.getElementById('i-fecha').value = new Date().toISOString().slice(0, 10);
+  document.getElementById('i-fecha').value = new Date().toISOString().slice(0,10);
   const sel = document.getElementById('i-maquina');
   sel.innerHTML = '<option value="">— seleccionar —</option>';
   maquinas.forEach(m => {
     const o = document.createElement('option');
-    o.value = m.id;
-    o.textContent = m.taller.replace('HVT_','') + ' — ' + m.id;
+    o.value = m.id; o.textContent = m.taller.replace('HVT_','') + ' — ' + m.id;
     sel.appendChild(o);
   });
   if (maqId) sel.value = maqId;
   ['i-desc','i-mat','i-obs'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('i-horas').value = '';
-  chips['int-tipo'] = 'Correctivo';
-  chips.comp = 'Motor/Turbina';
-  document.getElementById('chips-int-tipo').querySelectorAll('.chip').forEach((c,i) => c.classList.toggle('on', i===0));
-  document.getElementById('chips-comp').querySelectorAll('.chip').forEach((c,i) => c.classList.toggle('on', i===0));
+  chips['int-tipo'] = 'Correctivo'; chips.comp = 'Motor/Turbina';
+  document.getElementById('chips-int-tipo').querySelectorAll('.chip').forEach((c,i) => c.classList.toggle('on',i===0));
+  document.getElementById('chips-comp').querySelectorAll('.chip').forEach((c,i) => c.classList.toggle('on',i===0));
+  fotosTemp.intervencion = [];
+  renderFotosTemp('intervenciones','fotos-intervencion-grid','foto-intervencion-input');
   document.getElementById('modal-intervencion').classList.add('open');
   document.getElementById('main').style.overflow = 'hidden';
 }
-
 async function guardarIntervencion() {
   const maqId = document.getElementById('i-maquina').value;
   const desc = v('i-desc');
   if (!maqId || !desc) { alert('Máquina y descripción son obligatorias'); return; }
+  const ts = Date.now();
   const interv = {
-    ts: Date.now(),
-    fecha: document.getElementById('i-fecha').value,
+    ts, fecha: document.getElementById('i-fecha').value,
     maqId, tipo: chips['int-tipo'], componente: chips.comp,
-    horas: v('i-horas'), desc,
-    materiales: v('i-mat'), obs: v('i-obs')
+    horas: v('i-horas'), desc, materiales: v('i-mat'), obs: v('i-obs')
   };
   await dbPut('intervenciones', interv);
+  for (const b64 of fotosTemp.intervencion) await dbPut('fotos', {intTs: ts, maqId, data: b64, fecha: new Date().toISOString()});
   intervenciones = await dbGetAll('intervenciones');
   cerrarModal('modal-intervencion');
   renderIntervenciones();
 }
 
-// ─── MODAL DETALLE ────────────────────────────────────────────────────────────
-function abrirDetalle(id) {
+// ── DETALLE MÁQUINA ───────────────────────────────────────────────────────────
+async function abrirDetalle(id) {
   detMaqId = id;
   const m = maquinas.find(x => x.id === id);
   document.getElementById('detalle-titulo').textContent = m.id;
-
-  let html = '';
-  const dr = (k,v) => v ? `<div class="detail-row"><span class="detail-key">${k}</span><span class="detail-val">${v}</span></div>` : '';
-  html += dr('Taller', m.taller);
-  html += dr('Tipo', m.tipo);
-  html += dr('Marca', m.marca);
-  html += dr('Serie', m.serie);
-  html += dr('Año', m.anio);
-  if (m.arranque) html += dr('Arranque', m.arranque);
-
-  if (m.motImp && m.motImp.marca) {
+  const dr = (k,vv) => vv ? `<div class="detail-row"><span class="detail-key">${k}</span><span class="detail-val">${vv}</span></div>` : '';
+  let html = dr('Taller',m.taller) + dr('Tipo',m.tipo) + dr('Marca',m.marca) + dr('Serie',m.serie) + dr('Año',m.anio);
+  if (m.arranque) html += dr('Arranque',m.arranque);
+  if (m.motImp?.marca) {
     html += '<div class="section-sep">Motor impulsión</div>';
-    html += dr('Marca', m.motImp.marca);
-    html += dr('Referencia', m.motImp.ref);
-    if (m.motImp.kw) html += dr('Potencia / rpm', m.motImp.kw + ' kW · ' + m.motImp.rpm + ' rpm');
-    if (m.motImp.amp) html += dr('Corriente / Cos φ', m.motImp.amp + ' A · ' + m.motImp.cos);
-    if (m.motImp.rdf) html += dr('Rodamientos', m.motImp.rdf + ' / ' + m.motImp.rdt);
-    html += dr('Nº serie', m.motImp.ns);
+    html += dr('Marca',m.motImp.marca) + dr('Referencia',m.motImp.ref);
+    if (m.motImp.kw) html += dr('Potencia / rpm', m.motImp.kw+' kW · '+m.motImp.rpm+' rpm');
+    if (m.motImp.amp) html += dr('Corriente / Cos φ', m.motImp.amp+' A · '+m.motImp.cos);
+    if (m.motImp.rdf) html += dr('Rodamientos', m.motImp.rdf+' / '+m.motImp.rdt);
+    html += dr('Nº serie',m.motImp.ns);
   }
-  if (m.motExt && m.motExt.marca) {
+  if (m.motExt?.marca) {
     html += '<div class="section-sep">Motor extracción</div>';
-    html += dr('Marca', m.motExt.marca);
-    html += dr('Referencia', m.motExt.ref);
-    if (m.motExt.kw) html += dr('Potencia / rpm', m.motExt.kw + ' kW · ' + m.motExt.rpm + ' rpm');
-    if (m.motExt.rdf) html += dr('Rodamientos', m.motExt.rdf + ' / ' + m.motExt.rdt);
-    html += dr('Nº serie', m.motExt.ns);
+    html += dr('Marca',m.motExt.marca) + dr('Referencia',m.motExt.ref);
+    if (m.motExt.kw) html += dr('Potencia / rpm', m.motExt.kw+' kW · '+m.motExt.rpm+' rpm');
+    if (m.motExt.rdf) html += dr('Rodamientos', m.motExt.rdf+' / '+m.motExt.rdt);
+    html += dr('Nº serie',m.motExt.ns);
   }
-  if (m.quemador && m.quemador.marca) {
+  if (m.quemador?.marca) {
     html += '<div class="section-sep">Quemador</div>';
-    html += dr('Modelo', m.quemador.marca);
-    html += dr('Centralita', m.quemador.central);
-    html += dr('Bomba', m.quemador.bomba);
-    if (m.quemador.chicle) html += dr('Chicle / Aire', m.quemador.chicle + ' · ' + m.quemador.aire);
+    html += dr('Modelo',m.quemador.marca) + dr('Centralita',m.quemador.central) + dr('Bomba',m.quemador.bomba);
+    if (m.quemador.chicle) html += dr('Chicle / Aire', m.quemador.chicle+' · '+m.quemador.aire);
   }
-
-  const ints = intervenciones.filter(i => i.maqId === m.id).sort((a,b) => b.ts - a.ts);
+  html += '<div class="section-sep">Fotos</div><div id="fotos-det-maq"></div>';
+  const ints = intervenciones.filter(i => i.maqId === m.id).sort((a,b) => b.ts-a.ts);
   html += `<div class="section-sep">Intervenciones (${ints.length})</div>`;
   if (ints.length === 0) {
     html += '<p style="font-size:13px;color:var(--text3)">Sin intervenciones registradas.</p>';
   } else {
-    ints.slice(0,8).forEach(i => {
+    ints.slice(0,10).forEach(i => {
       const badge = i.tipo==='Correctivo'?'badge-red':i.tipo==='Preventivo'?'badge-green':'badge-gray';
       html += `<div class="int-item">
         <div class="int-meta">${i.fecha} · <span class="badge ${badge}" style="font-size:10px;padding:1px 6px">${i.tipo}</span> · ${i.componente}${i.horas?' · '+i.horas+'h':''}</div>
         <div class="int-desc">${i.desc}</div>
         ${i.materiales?`<div class="int-mat">${i.materiales}</div>`:''}
+        <div id="fotos-det-int-${i.ts}"></div>
       </div>`;
     });
   }
   if (m.obs) html += `<p style="font-size:13px;color:var(--text2);margin-top:8px">${m.obs}</p>`;
-
   document.getElementById('detalle-body').innerHTML = html;
   document.getElementById('modal-detalle').classList.add('open');
   document.getElementById('main').style.overflow = 'hidden';
+  await renderFotosMaquinaDetalle(id);
+  for (const i of ints.slice(0,10)) await renderFotosIntervencionDetalle(i.ts);
 }
-
 function editarDesdeDet() { cerrarModal('modal-detalle'); abrirModalMaquina(detMaqId); }
 function nuevaIntDesdeDet() { cerrarModal('modal-detalle'); abrirModalIntervencion(detMaqId); }
 
-// ─── CERRAR MODAL ─────────────────────────────────────────────────────────────
+// ── CERRAR MODAL ──────────────────────────────────────────────────────────────
 function cerrarModal(id) {
   document.getElementById(id).classList.remove('open');
   document.getElementById('main').style.overflow = '';
 }
 
-// ─── RENDER ───────────────────────────────────────────────────────────────────
+// ── RENDER ────────────────────────────────────────────────────────────────────
 function renderMaquinas() {
   const cont = document.getElementById('lista-maquinas');
   if (maquinas.length === 0) {
-    cont.innerHTML = `<div class="empty">
-      <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-      <p>Sin máquinas registradas.<br>Pulsa "+ Nueva" para añadir.</p>
-    </div>`;
+    cont.innerHTML = `<div class="empty"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg><p>Sin máquinas registradas.<br>Pulsa "+ Nueva" para añadir.</p></div>`;
     return;
   }
   const porTaller = {};
-  maquinas.forEach(m => {
-    if (!porTaller[m.taller]) porTaller[m.taller] = [];
-    porTaller[m.taller].push(m);
-  });
+  maquinas.forEach(m => { if (!porTaller[m.taller]) porTaller[m.taller]=[]; porTaller[m.taller].push(m); });
   let html = '';
   Object.entries(porTaller).forEach(([taller, items]) => {
     html += `<div class="taller-label">${taller.replace('HVT_','')}</div>`;
     items.forEach(m => {
       const ints = intervenciones.filter(i => i.maqId === m.id);
-      const last = ints.sort((a,b) => b.ts-a.ts)[0];
-      const tipoBadge = m.tipo==='Cabina pintura'?'badge-yellow':m.tipo==='Elevador'?'badge-blue':'badge-gray';
+      const last = [...ints].sort((a,b)=>b.ts-a.ts)[0];
+      const tipoBadge = m.tipo==='Cabina pintura'?'badge-amber':m.tipo==='Elevador'?'badge-blue':'badge-gray';
       html += `<div class="card" onclick="abrirDetalle('${m.id}')">
         <div class="card-top">
-          <div>
-            <div class="card-id">${m.id}</div>
-            <div class="card-meta">${m.marca||''}${m.arranque?' · '+m.arranque:''}</div>
-          </div>
+          <div><div class="card-id">${m.id}</div><div class="card-meta">${m.marca||''}${m.arranque?' · '+m.arranque:''}</div></div>
           <span class="badge ${tipoBadge}">${m.tipo}</span>
         </div>
-        <div style="font-size:12px;color:var(--text3);margin-top:6px">
-          ${ints.length} intervenciones${last?' · última '+last.fecha:''}
-        </div>
+        <div style="font-size:12px;color:var(--text3);margin-top:6px">${ints.length} intervenciones${last?' · última '+last.fecha:''}</div>
       </div>`;
     });
   });
   cont.innerHTML = html;
 }
-
 function renderIntervenciones() {
   const cont = document.getElementById('lista-intervenciones');
   if (intervenciones.length === 0) {
-    cont.innerHTML = `<div class="empty">
-      <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-      <p>Sin intervenciones registradas.</p>
-    </div>`;
+    cont.innerHTML = `<div class="empty"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg><p>Sin intervenciones registradas.</p></div>`;
     return;
   }
-  const sorted = [...intervenciones].sort((a,b) => b.ts - a.ts);
+  const sorted = [...intervenciones].sort((a,b)=>b.ts-a.ts);
   let html = '';
   sorted.forEach(i => {
-    const m = maquinas.find(x => x.id === i.maqId);
+    const m = maquinas.find(x=>x.id===i.maqId);
     const taller = m ? m.taller.replace('HVT_','') : '';
     const badge = i.tipo==='Correctivo'?'badge-red':i.tipo==='Preventivo'?'badge-green':i.tipo==='Inspección'?'badge-blue':'badge-gray';
     html += `<div class="card" style="cursor:default">
       <div class="card-top">
-        <div>
-          <div class="card-id">${i.maqId}</div>
-          <div class="card-meta">${taller}${i.horas?' · '+i.horas+'h':''} · ${i.componente}</div>
-        </div>
-        <div style="text-align:right">
-          <span class="badge ${badge}">${i.tipo}</span>
-          <div style="font-size:11px;color:var(--text3);margin-top:4px">${i.fecha}</div>
-        </div>
+        <div><div class="card-id">${i.maqId}</div><div class="card-meta">${taller}${i.horas?' · '+i.horas+'h':''} · ${i.componente}</div></div>
+        <div style="text-align:right"><span class="badge ${badge}">${i.tipo}</span><div style="font-size:11px;color:var(--text3);margin-top:4px">${i.fecha}</div></div>
       </div>
       <div style="font-size:14px;margin-top:6px;line-height:1.4">${i.desc}</div>
       ${i.materiales?`<div style="font-size:12px;color:var(--text3);margin-top:4px">${i.materiales}</div>`:''}
@@ -729,18 +742,13 @@ function renderIntervenciones() {
   });
   cont.innerHTML = html;
 }
-
 function renderResumen() {
-  const nMaq = maquinas.length;
-  const nInt = intervenciones.length;
+  const nMaq = maquinas.length, nInt = intervenciones.length;
   const nCorr = intervenciones.filter(i=>i.tipo==='Correctivo').length;
   const nPrev = intervenciones.filter(i=>i.tipo==='Preventivo').length;
-  const hTotal = intervenciones.reduce((s,i) => s + (parseFloat(i.horas)||0), 0);
-  const online = navigator.onLine;
-
+  const hTotal = intervenciones.reduce((s,i)=>s+(parseFloat(i.horas)||0),0);
   const recientes = [...intervenciones].sort((a,b)=>b.ts-a.ts).slice(0,5);
-
-  let html = `
+  document.getElementById('resumen-content').innerHTML = `
   <div class="stats-grid">
     <div class="stat-card"><div class="stat-num">${nMaq}</div><div class="stat-lbl">Máquinas</div></div>
     <div class="stat-card"><div class="stat-num">${nInt}</div><div class="stat-lbl">Intervenciones</div></div>
@@ -752,52 +760,38 @@ function renderResumen() {
     <div class="stat-lbl">Horas totales registradas</div>
   </div>
   <div class="sync-row">
-    <div class="sync-dot ${online?'':'offline'}"></div>
-    <span>${online?'En línea — datos sincronizados':'Sin conexión — datos guardados localmente'}</span>
+    <div class="sync-dot ${navigator.onLine?'':'offline'}"></div>
+    <span>${navigator.onLine?'En línea':'Sin conexión — datos guardados localmente'}</span>
   </div>
   <div style="margin-top:16px">
     <div class="section-sep">Últimas intervenciones</div>
     ${recientes.length===0?'<p style="font-size:13px;color:var(--text3)">Sin intervenciones aún.</p>':
-    recientes.map(i=>`<div class="int-item">
-      <div class="int-meta">${i.fecha} · ${i.maqId} · ${i.componente}</div>
-      <div class="int-desc">${i.desc}</div>
-    </div>`).join('')}
+    recientes.map(i=>`<div class="int-item"><div class="int-meta">${i.fecha} · ${i.maqId} · ${i.componente}</div><div class="int-desc">${i.desc}</div></div>`).join('')}
   </div>
   <button class="btn-full btn-ghost" style="margin-top:16px" onclick="exportarJSON()">Exportar JSON</button>`;
-
-  document.getElementById('resumen-content').innerHTML = html;
 }
+function renderAll() { renderMaquinas(); renderIntervenciones(); }
 
-function renderAll() {
-  renderMaquinas();
-  renderIntervenciones();
-}
-
-// ─── EXPORTAR ─────────────────────────────────────────────────────────────────
+// ── EXPORTAR ──────────────────────────────────────────────────────────────────
 function exportarJSON() {
-  const data = { version: '1.0', exportado: new Date().toISOString(), maquinas, intervenciones };
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const data = {version:'1.0', exportado:new Date().toISOString(), maquinas, intervenciones};
+  const blob = new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = url; a.download = 'sentinel_field_' + new Date().toISOString().slice(0,10) + '.json';
-  a.click();
+  a.href=url; a.download='sentinel_field_'+new Date().toISOString().slice(0,10)+'.json'; a.click();
   URL.revokeObjectURL(url);
 }
 
-// ─── OFFLINE ──────────────────────────────────────────────────────────────────
+// ── OFFLINE ───────────────────────────────────────────────────────────────────
 function updateOfflineBar() {
-  document.getElementById('offline-bar').classList.toggle('show', !navigator.onLine);
+  document.getElementById('offline-bar').classList.toggle('show',!navigator.onLine);
 }
 window.addEventListener('online', updateOfflineBar);
 window.addEventListener('offline', updateOfflineBar);
 updateOfflineBar();
 
-// ─── SERVICE WORKER ───────────────────────────────────────────────────────────
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js').catch(() => {});
-}
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(()=>{});
 
-// ─── INIT ─────────────────────────────────────────────────────────────────────
 initDB().then(cargar);
 </script>
 </body>
